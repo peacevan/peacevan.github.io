@@ -762,4 +762,9 @@ button:focus,
     margin-left: 12% !important;
     border-color: #e7e7e7 !important;
 }
+#nav{
+    position: fixed;
+    top: 3vh;
+    z-index: 999;
+}
 
