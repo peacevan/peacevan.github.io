@@ -746,3 +746,20 @@ button:focus,
     text-align : center;
     top        : 65%;
     }
+    
+/* ---------------------------------------------- /*
+ * cutumization
+/* ---------------------------------------------- */
+
+.navbar-static-top {
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
+    background: #fff !important;
+    border-radius: 40px !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1) !important;
+    width: 70% !important;
+    margin-left: 12% !important;
+    border-color: #e7e7e7 !important;
+}
+
