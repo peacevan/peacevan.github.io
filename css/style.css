@@ -767,4 +767,8 @@ button:focus,
     top: 3vh;
     z-index: 999;
 }
+.img-project{
+    width: 35px;
+    height: 35px;
+}
 
