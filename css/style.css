@@ -799,9 +799,9 @@ button:focus,
     align-items: center;
     flex-direction: column;
 }
-
-
-
+.card-link{
+    font-size: 12px;
+}
 
 .flex-container {
     display: flex;
