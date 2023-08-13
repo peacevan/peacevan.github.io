@@ -803,6 +803,13 @@ button:focus,
     font-size: 12px;
 }
 
+
+.nav-tabs.nav-justified>li>a {
+    border-bottom: 0px solid #ddd! important;
+    font-size: 15px;
+}
+
+
 .flex-container {
     display: flex;
     flex-direction: row;
