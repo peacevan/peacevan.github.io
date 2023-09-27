@@ -769,8 +769,8 @@ button:focus,
     z-index: 999;
 }
 .img-project{
-    width:120px;
-    height: 120px;
+    width:150px;
+    height: 150px;
 }
 
 .card{ 
@@ -788,6 +788,27 @@ button:focus,
     border-color: #e7e7e7 !important;
     padding: 6px;
 }
+
+
+.stack{ 
+
+    border: solid; 
+    align-items: center !important;
+     display: flex !important; 
+    justify-content: center !important;
+    background: #fff !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,.1) !important;
+     width: auto !important; 
+     heidt: 150px !important; 
+    /* margin-left: 12% !important; */
+    border-color: #e7e7e7 !important;
+    padding: 6px;
+}
+.stack-label{
+    font-weight: 700;
+    text-align: center;
+}
 .card-text{
     text-align: center;
     font-size: 12px;
@@ -804,6 +825,9 @@ button:focus,
 }
 .card-link{
     font-size: 12px;
+    padding-top: 0px;
+    padding-left: 20px;
+
 }
 
 
@@ -895,3 +919,5 @@ button:focus,
     align-self: auto;
     order: 0;
   }
+
+  
