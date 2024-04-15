@@ -923,7 +923,7 @@ button:focus,
   }
 
 @media (max-width: 450px){
-.nav-tabs {
+.navbar-static-top {
     display: none !important;
  }
  .name{
