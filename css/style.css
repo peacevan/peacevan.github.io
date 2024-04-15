@@ -919,12 +919,12 @@ button:focus,
   }
 
   .mobile-menu{
-    display: none;
+    display: none !important;
   }
 
 @media (max-width: 450px){
 .navbar-static-top {
-    display: none !important;
+    display: block !important;
  }
  .name{
  font-size: 16px;
