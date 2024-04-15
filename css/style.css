@@ -909,8 +909,7 @@ button:focus,
     align-self: auto;
     order: 0;
   }
-  
-  .flex-items:nth-child(4) {
+.flex-items:nth-child(4){
     display: block;
     flex-grow: 0;
     flex-shrink: 1;
