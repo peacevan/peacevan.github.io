@@ -923,7 +923,7 @@ button:focus,
 @media (min-width: 360px){
 
 .container {
-    display: none !important;
+    # display: none !important;
  }
 }
 
