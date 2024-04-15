@@ -920,8 +920,7 @@ button:focus,
   }
 
 
-@media (min-width: 450px){
-
+@media (max-width: 450px){
 .navbar-static-top {
     display: block !important;
  }
