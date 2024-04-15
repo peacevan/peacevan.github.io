@@ -922,7 +922,7 @@ button:focus,
 
 @media (max-width: 450px){
 .navbar-static-top {
-    display: none !important;
+    display: block !important;
  }
 }
 
