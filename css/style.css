@@ -918,6 +918,9 @@ button:focus,
     order: 0;
   }
 
+  .mobile-menu{
+    display: none;
+  }
 
 @media (max-width: 450px){
 .navbar-static-top {
@@ -941,6 +944,11 @@ button:focus,
  .role{
     margin-left: -26px;
  }
+
+ .mobile-menu{
+   display: none;
+}
+
 }
 
 
