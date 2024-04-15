@@ -920,7 +920,7 @@ button:focus,
   }
 
 
-@media (min-width: 360px){
+@media (min-width: 450px){
 
 .container {
     display: none !important;
