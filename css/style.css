@@ -952,16 +952,7 @@ body {
   color: #212121;
 }
 
-.container {
-  position: relative;
-  max-width: 420px;
-  width: 100%;
-  margin: 0 auto;
-}
 
-h1, p {
-  text-align: center;
-}
 
 .btn1 {
   position: absolute;
