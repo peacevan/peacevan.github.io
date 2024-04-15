@@ -12,9 +12,107 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/owl.carousel.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
+   
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden; /* Impede a rolagem da página quando o menu está aberto */
+        }
+
+        .mobile-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding:1px;
+            color: #fff;
+            height: 100vh; /* 100% da altura da viewport */
+        }
+
+        .menu-icon {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            background-color: red;
+            width: 100%; /* Largura desejada */
+            align-items: flex-end;
+			padding: 7px;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            margin: 3px 0;
+            transition: 0.4s;
+        }
+
+        .menu-items {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 0;
+            overflow: hidden;
+            transition: width 0.5s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            background-color: red;
+            height: 100%;
+        }
+
+        .menu-items li {
+            padding: 10px;
+        }
+
+        .menu-items a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .menu-items a:hover {
+            text-decoration: underline;
+        }
+
+        /* Adicionado estilo para o ícone de X */
+        .menu-icon.x .bar:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .menu-icon.x .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-icon.x .bar:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+						
+    </style>
+
+
 </head>
 
 <body>
+
+    <div class="mobile-menu">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        <ul class="menu-items">
+            <li><a href="#">Pagina Inicial</a></li>
+            <li><a href="#">Seminovos Toyota</a></li>
+            <li><a href="#">Destaques</a></li>
+            <li><a href="#">Veículo Certificados</a></li>
+			<li><a href="#">Frota Especial</a></li>
+			<li><a href="#">Notícias</a></li>
+        </ul>
+    </div>
+
+
     <div id="main-wrapper">
         <div id="preloader">
             <div id="status">
@@ -26,17 +124,6 @@
         
                 
             <div id="nav">
-
-                <div class="container">
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="menu btn1" data-menu="1">
-                          <div class="icon-left"></div>
-                          <div class="icon-right"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
             </div>
             <div class="container" style="margin-top: 31px;">
@@ -258,14 +345,14 @@
     <script src="js/scripts.js"></script>
 
     <script>
-
-        $(document).ready( function(){
-         $('.menu').click (function(){
-           $(this).toggleClass('open');
-           alert('aqui');
-        })
-        })
-</script>
+        function toggleMenu() {
+            var menuItems = document.querySelector('.menu-items');
+            var menuIcon = document.querySelector('.menu-icon');
+            menuItems.style.width = (menuItems.style.width === '0px' || menuItems.style.width === '') ? '70%' : '0px'; /* Largura desejada */
+            // Adicionando/Removendo a classe 'x' para alterar o ícone
+            menuIcon.classList.toggle('x', menuItems.style.width !== '0px');
+        }
+    </script> 
 
 </body>
 
