@@ -8,7 +8,6 @@ $(document).ready(function(){
 
     setTimeout(function(){
       $("#nav-mobile").load("nav_mobile.html");
-      alert('aqui');
     },0);
 
  

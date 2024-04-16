@@ -1045,10 +1045,16 @@ button:focus,
 .menu-icon.x .bar:nth-child(3) {
     transform: rotate(45deg) translate(-5px, -6px);
 }
-   
- 
-  /***/
 
+.stack{
+   disply:none;
+}
+.row-project{
+    margin-top: -700px;
+    z-index: -1;
+    position: relative;
+}
+  /***/
 }
 
 
