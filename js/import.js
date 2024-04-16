@@ -5,4 +5,10 @@ $(document).ready(function(){
     setTimeout(function(){
       $("#nav").load("nav.html");
     },0);
+
+    setTimeout(function(){
+      $("#nav-mobile").load("nav_mobile.html");
+    },0);
+
+ 
 });
