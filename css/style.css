@@ -946,16 +946,100 @@ button:focus,
  }
 
  .mobile-menu{
-   display: block !important;
+    display: block !important;
+    margin-top: -51px;
+    width: 126%;
+    margin-left: -36px;
 }
 .row-index{
     position: relative;
+    margin-top: -609px;
+    z-index: -1;
 }
 
 .container-main{
     
 
 }
+/*menu*/
+
+  
+
+.mobile-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding:1px;
+    color: #fff;
+    height: 100vh; /* 100% da altura da viewport */
+ 
+}
+
+.menu-icon {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    background-color: #dddd;
+    width: 100%; /* Largura desejada */
+    align-items: flex-end;
+    padding: 7px;
+}
+
+.bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 3px 0;
+    transition: 0.4s;
+}
+
+.menu-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    width: 0;
+    overflow: hidden;
+    transition: width 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    background-color: #fffcfccf;
+    height: 70%;
+    z-index: 1;
+    border-bottom-right-radius: 5%;
+    border-bottom-left-radius: 5%;
+}
+
+.menu-items li {
+    padding: 10px;
+}
+
+.menu-items a {
+    text-decoration: none;
+    color: #302a2a96;
+    font-size: 18px;
+    font-weight: 1000;
+}
+
+.menu-items a:hover {
+    text-decoration: underline;
+}
+
+/* Adicionado estilo para o ícone de X */
+.menu-icon.x .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.menu-icon.x .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-icon.x .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+   
+ 
+  /***/
 
 }
 
