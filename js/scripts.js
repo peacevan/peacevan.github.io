@@ -27,3 +27,11 @@ jQuery(function ($) {
 
 
 }); // JQuery end
+
+function toggleMenu() {
+    var menuItems = document.querySelector('.menu-items');
+    var menuIcon = document.querySelector('.menu-icon');
+    menuItems.style.width = (menuItems.style.width === '0px' || menuItems.style.width === '') ? '70%' : '0px'; /* Largura desejada */
+    // Adicionando/Removendo a classe 'x' para alterar o ícone
+    menuIcon.classList.toggle('x', menuItems.style.width !== '0px');
+}
