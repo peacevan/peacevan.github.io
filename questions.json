@@ -403,7 +403,7 @@
       "SLA",
       "fail-fast"
     ],
-    "answer": "1. Circuit Breaker (Resilience4j): circuito \"abre\" após falhas repetidas — chamadas subsequentes falham imediatamente (fail-fast), evitando timeout em cascata.\n2. Fallback: retornar cache, valor padrão ou mensagem amigável ao usuário.\n3. Retry com exponential backoff e jitter: tentar novamente sem sobrecarregar o serviço.\n4. Timeout agressivo: não bloquear threads indefinidamente.\n5. Bulkhead: thread pools isolados para que falha de um serviço não esgote os recursos da aplicação.\n6. Monitoramento: alertar quando thresholds de erro/latência são ultrapassados.\n7. Degradação graceful: operar com funcionalidades reduzidas em vez de parar completamente.\n8. Health Checks: endpoint que verifica dependências críticas.\n9. Post-mortem: analisar violação de SLA e negociar melhorias."
+    "answer": "1. Circuit Breaker (Resilience4j): circuito abre após falhas repetidas — chamadas subsequentes falham imediatamente (fail-fast), evitando timeout em cascata.\n2. Fallback: retornar cache, valor padrão ou mensagem amigável ao usuário.\n3. Retry com exponential backoff e jitter: tentar novamente sem sobrecarregar o serviço.\n4. Timeout agressivo: não bloquear threads indefinidamente.\n5. Bulkhead: thread pools isolados para que falha de um serviço não esgote os recursos da aplicação.\n6. Monitoramento: alertar quando thresholds de erro/latência são ultrapassados.\n7. Degradação graceful: operar com funcionalidades reduzidas em vez de parar completamente.\n8. Health Checks: endpoint que verifica dependências críticas.\n9. Post-mortem: analisar violação de SLA e negociar melhorias."
   },
   {
     "id": "qu01",
@@ -565,5 +565,166 @@
       "senioridade"
     ],
     "answer": "Prefiro equipe. Revisão de código, pair programming e brainstorms sempre elevam a qualidade além do que eu faria sozinho. Perspectivas diferentes identificam riscos e oportunidades que eu poderia não enxergar.\n\nValorizo foco individual para tarefas que exigem concentração profunda: bugs complexos, refatoração crítica, estudo.\n\nO ideal: trabalhar com o time para alinhamento e decisões arquiteturais, com autonomia para executar tarefas técnicas com responsabilidade.\n\nCom 14 anos em equipes de grande porte (Sebrae, Fiocruz, INEP, Caixa), aprendi que o resultado coletivo supera a soma das contribuições individuais quando há comunicação e confiança."
+  },
+  {
+    "id": "an05",
+    "tech": "angular",
+    "question": "O que são Signals no Angular e como diferem do RxJS?",
+    "tags": [
+      "Signals",
+      "Angular 17",
+      "reatividade",
+      "computed",
+      "effect",
+      "RxJS",
+      "zone.js",
+      "performance"
+    ],
+    "answer": "Signals (Angular 16+): primitiva reativa síncrona que representa um valor que pode mudar ao longo do tempo. O Angular rastreia dependências automaticamente e atualiza apenas o que mudou — sem Zone.js.\n\nConceitos:\n• signal(value): cria um signal gravável.\n• computed(() => ...): valor derivado de outros signals — atualiza automaticamente.\n• effect(() => ...): efeito colateral que roda quando signals mudam.\n\nDiferenças do RxJS:\n• Signals são síncronos e sempre têm um valor atual. Observables são assíncronos e lazy.\n• Signals: sintaxe simples, sem subscribe/unsubscribe. RxJS: poderoso para fluxos complexos, eventos, HTTP.\n• Signals eliminam a necessidade de Zone.js e reduzem change detection desnecessário.\n\nQuando usar:\n• Signals → estado local do componente, valores derivados, UI reativa simples.\n• RxJS → HTTP, WebSocket, eventos complexos com operadores (debounce, switchMap).\n\nAngular 17+ recomenda Signals para estado local e RxJS para fluxos assíncronos."
+  },
+  {
+    "id": "an06",
+    "tech": "angular",
+    "question": "O que é injeção de dependência hierárquica no Angular e como o escopo de providers funciona?",
+    "tags": [
+      "DI",
+      "providers",
+      "ElementInjector",
+      "ModuleInjector",
+      "providedIn",
+      "singleton",
+      "escopo",
+      "Angular"
+    ],
+    "answer": "Angular possui uma árvore de injetores hierárquicos. Cada nível pode ter seus próprios providers, criando instâncias com escopos distintos.\n\nHierarquia:\n• Root Injector: @Injectable({ providedIn: 'root' }) — singleton na aplicação inteira.\n• Module Injector: declarado em providers do NgModule — compartilhado pelo módulo.\n• Component Injector: declarado em providers do @Component — instância nova por componente e seus filhos.\n• Element Injector: por diretiva ou componente individual.\n\nImpacto prático:\n• providedIn: 'root' → uma instância para todo o app (padrão recomendado).\n• providers no componente → cada instância do componente tem seu próprio service — útil para state local isolado.\n• Lazy modules criam injector filho — services declarados neles não são singleton globais.\n\nBoa prática: usar providedIn: 'root' por padrão. Declarar no componente apenas quando o estado deve ser isolado por instância."
+  },
+  {
+    "id": "mg01",
+    "tech": "mongodb",
+    "question": "Quando usar MongoDB em vez de um banco relacional?",
+    "tags": [
+      "MongoDB",
+      "NoSQL",
+      "documento",
+      "schema",
+      "flexibilidade",
+      "escalabilidade",
+      "relacional",
+      "trade-off"
+    ],
+    "answer": "MongoDB armazena dados como documentos JSON (BSON), sem schema fixo, com escalabilidade horizontal nativa.\n\nUse MongoDB quando:\n• Esquema de dados variável ou evolutivo — campos diferentes por registro.\n• Dados naturalmente hierárquicos ou aninhados (documentos dentro de documentos).\n• Leitura e escrita de documentos completos — sem JOINs complexos.\n• Alta escalabilidade horizontal: sharding distribuído nativamente.\n• Event logs, catálogos de produtos, dados de IoT, sessões de usuário.\n\nPrefira banco relacional quando:\n• Dados fortemente relacionados exigem JOINs e integridade referencial.\n• Transações ACID complexas entre múltiplas entidades.\n• Relatórios e queries analíticas complexas (SQL é mais expressivo).\n• Esquema estável e bem definido.\n\nArmadilha: MongoDB não substitui relacional em sistemas financeiros com transações distribuídas — use com consciência das limitações de consistência."
+  },
+  {
+    "id": "mg02",
+    "tech": "mongodb",
+    "question": "Como funciona a aggregation pipeline no MongoDB?",
+    "tags": [
+      "aggregation",
+      "pipeline",
+      "match",
+      "group",
+      "lookup",
+      "project",
+      "unwind",
+      "MongoDB",
+      "performance"
+    ],
+    "answer": "Aggregation Pipeline: sequência de estágios que transformam documentos progressivamente — equivalente ao SELECT + GROUP BY + JOIN do SQL.\n\nEstágios principais:\n• $match: filtra documentos (equivalente ao WHERE). Coloque o mais cedo possível para reduzir volume.\n• $group: agrupa e calcula ($sum, $avg, $max, $min, $count).\n• $project: seleciona/renomeia campos (equivalente ao SELECT).\n• $sort: ordena resultados.\n• $lookup: JOIN com outra coleção.\n• $unwind: desdobra arrays em documentos individuais.\n• $limit / $skip: paginação.\n\nExemplo — total de pedidos por cliente:\n  db.pedidos.aggregate([\n    { $match: { status: 'pago' } },\n    { $group: { _id: '$clienteId', total: { $sum: '$valor' } } },\n    { $sort: { total: -1 } }\n  ])\n\nPerformance: $match e $sort no início aproveitam índices. Evite $lookup excessivo — indica modelagem inadequada."
+  },
+  {
+    "id": "mg03",
+    "tech": "mongodb",
+    "question": "Como modelar relacionamentos no MongoDB: embedding vs referencing?",
+    "tags": [
+      "embedding",
+      "referencing",
+      "modelagem",
+      "MongoDB",
+      "documento",
+      "lookup",
+      "denormalização",
+      "performance"
+    ],
+    "answer": "MongoDB oferece duas estratégias para relacionamentos:\n\nEmbedding (documento aninhado):\n• Dados relacionados dentro do mesmo documento.\n• Vantagem: leitura em uma única operação, sem JOIN.\n• Use quando: dados sempre lidos juntos, relação 1:poucos, filho não existe sem pai.\n• Exemplo: endereços dentro do documento de cliente.\n\nReferencing (referência por ID):\n• Documentos separados com ID de referência.\n• Vantagem: evita duplicação, documentos menores.\n• Use quando: dados lidos separadamente, relação 1:muitos ou muitos:muitos, documento filho cresce ilimitadamente.\n• Exemplo: pedidos referenciando cliente por clienteId.\n\nRegra prática:\n• 'Dados acessados juntos devem ser armazenados juntos' — embedding.\n• 'Dados que crescem ilimitadamente ou são compartilhados' — referencing.\n\nDiferente do relacional: MongoDB favorece denormalização para performance de leitura."
+  },
+  {
+    "id": "sb03",
+    "tech": "spring",
+    "question": "O que é Spring Boot Auto Configuration e como funciona internamente?",
+    "tags": [
+      "Auto Configuration",
+      "Spring Boot",
+      "@Conditional",
+      "@EnableAutoConfiguration",
+      "spring.factories",
+      "starter",
+      "classpath"
+    ],
+    "answer": "Auto Configuration é o mecanismo que configura automaticamente beans com base no classpath, propriedades e beans existentes.\n\nComo funciona:\n1. @SpringBootApplication inclui @EnableAutoConfiguration.\n2. Spring Boot carrega META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports (Boot 3) ou spring.factories (Boot 2).\n3. Cada AutoConfiguration é uma classe @Configuration com condições.\n4. Condições controlam se a configuração é aplicada:\n   • @ConditionalOnClass: aplica se classe existe no classpath.\n   • @ConditionalOnMissingBean: aplica se o bean não foi definido pelo desenvolvedor.\n   • @ConditionalOnProperty: aplica se propriedade está configurada.\n\nExemplo: DataSourceAutoConfiguration verifica se há driver JDBC no classpath e configura DataSource automaticamente — mas não sobrescreve se você definir o seu.\n\nDebug: --debug no startup lista todas as AutoConfigurations aplicadas e rejeitadas (Conditions Report).\n\nPersonalizar: sempre que você define seu próprio bean, o @ConditionalOnMissingBean impede a configuração automática."
+  },
+  {
+    "id": "sb04",
+    "tech": "spring",
+    "question": "Como funciona o Spring Security com JWT em uma API REST?",
+    "tags": [
+      "Spring Security",
+      "JWT",
+      "filtro",
+      "OncePerRequestFilter",
+      "stateless",
+      "Bearer",
+      "SecurityFilterChain",
+      "autenticação"
+    ],
+    "answer": "Fluxo completo de autenticação JWT com Spring Security:\n\n1. Login: cliente envia credenciais → AuthController valida → gera JWT com claims (userId, roles, exp) → retorna token.\n2. Requisições subsequentes: cliente envia header Authorization: Bearer {token}.\n3. Filtro JWT (OncePerRequestFilter): intercepta toda requisição, extrai e valida o token, cria Authentication e injeta no SecurityContextHolder.\n4. Spring Security verifica autorizações (@PreAuthorize, hasRole) com base no contexto.\n\nConfiguração SecurityFilterChain (Spring Boot 3):\n  http\n    .csrf(csrf -> csrf.disable())\n    .sessionManagement(s -> s.sessionCreationPolicy(STATELESS))\n    .authorizeHttpRequests(auth -> auth\n      .requestMatchers('/auth/**').permitAll()\n      .anyRequest().authenticated())\n    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);\n\nBoas práticas:\n• Usar tempo de expiração curto (15-60min) + refresh token.\n• Assinar com chave assimétrica (RS256) em produção.\n• Nunca armazenar dados sensíveis no payload JWT — é apenas Base64, não criptografado."
+  },
+  {
+    "id": "dp01",
+    "tech": "patterns",
+    "question": "Quais padrões de projeto você usa no dia a dia e em que situações?",
+    "tags": [
+      "Strategy",
+      "Factory",
+      "Builder",
+      "Repository",
+      "Observer",
+      "Decorator",
+      "SOLID",
+      "GoF",
+      "design patterns"
+    ],
+    "answer": "Padrões mais utilizados no contexto Java/Spring:\n\nStrategy: encapsula algoritmos intercambiáveis. Uso: diferentes formas de cálculo de taxa, regras de desconto por tipo de cliente. Evita if/else em cascata.\n\nFactory / Factory Method: centraliza criação de objetos complexos. Uso: criar instâncias de processadores de pagamento por tipo (PIX, boleto, cartão).\n\nBuilder: construção passo a passo de objetos complexos. Uso: DTOs com muitos campos opcionais, configurações. Lombok @Builder reduz boilerplate.\n\nRepository: abstrai acesso a dados. Uso: Spring Data JPA — separa lógica de negócio da persistência.\n\nObserver: notifica múltiplos observadores sobre eventos. Uso: Spring Events (@EventListener), Kafka consumers, websockets.\n\nDecorator: adiciona comportamento sem alterar a classe original. Uso: logging, cache, validação em torno de services existentes.\n\nTemplate Method: define esqueleto de algoritmo com passos extensíveis. Uso: pipelines de processamento com etapas fixas e variáveis.\n\nRegra: conhecer o problema antes de aplicar o padrão. Padrão aplicado sem necessidade vira complexidade desnecessária."
+  },
+  {
+    "id": "dp02",
+    "tech": "patterns",
+    "question": "O que é o padrão Repository e como ele se aplica com Spring Data JPA?",
+    "tags": [
+      "Repository",
+      "Spring Data",
+      "JPA",
+      "DDD",
+      "abstração",
+      "interface",
+      "query method",
+      "testabilidade"
+    ],
+    "answer": "Repository é um padrão de DDD que abstrai a coleção de objetos de domínio, isolando a lógica de negócio dos detalhes de persistência.\n\nBenefícios:\n• Desacoplamento: Service não conhece JPA, SQL ou banco.\n• Testabilidade: fácil mockar o Repository com Mockito.\n• Substituição: trocar JPA por MongoDB sem alterar a camada de negócio.\n\nCom Spring Data JPA:\n• Extend JpaRepository<Entidade, ID> → operações CRUD gratuitas.\n• Query Methods: findByNomeAndStatus(String nome, Status status) — Spring gera o SQL.\n• @Query: JPQL ou SQL nativo para queries complexas.\n• Specifications: queries dinâmicas tipadas.\n\nExemplo:\n  public interface ClienteRepository extends JpaRepository<Cliente, Long> {\n    List<Cliente> findByCidadeAndAtivo(String cidade, boolean ativo);\n    @Query(\"SELECT c FROM Cliente c WHERE c.saldo > :minimo\")\n    List<Cliente> findComSaldoAcimaDe(@Param(\"minimo\") BigDecimal minimo);\n  }\n\nEm testes: @DataJpaTest carrega apenas contexto JPA — testes de repository rápidos e isolados."
+  },
+  {
+    "id": "dp03",
+    "tech": "patterns",
+    "question": "O que é o padrão Saga e quando usá-lo em microsserviços?",
+    "tags": [
+      "Saga",
+      "microsserviços",
+      "consistência eventual",
+      "coreografia",
+      "orquestração",
+      "compensação",
+      "Kafka",
+      "transação distribuída"
+    ],
+    "answer": "Saga gerencia transações distribuídas em microsserviços onde não existe transação ACID global. Cada serviço executa sua transação local e publica evento — se algo falha, transações compensatórias desfazem as anteriores.\n\nDois estilos:\n\nCoreografia: serviços reagem a eventos uns dos outros autonomamente. Sem coordenador central. Simples para poucos serviços, difícil de rastrear em fluxos complexos.\n\nOrquestração: um orquestrador (ex: Temporal, Conductor) coordena os serviços explicitamente. Mais fácil de visualizar e debugar. Recomendado para fluxos complexos.\n\nExemplo — pedido de e-commerce:\n1. PedidoService: cria pedido → evento PedidoCriado.\n2. EstoqueService: reserva itens → evento EstoqueReservado.\n3. PagamentoService: processa pagamento → sucesso ou falha.\n4. Falha no pagamento: eventos compensatórios → EstoqueService libera reserva → PedidoService cancela pedido.\n\nQuando usar: transações que envolvem múltiplos microsserviços com bancos independentes.\nQuando evitar: monólitos ou sistemas onde um banco centralizado resolve com transação ACID.\n\nFerramentas: Kafka (eventos), Axon Framework, Temporal.io."
   }
 ]
