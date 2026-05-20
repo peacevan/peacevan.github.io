@@ -1,0 +1,12 @@
+{
+  "files": [
+    "assets/questions/java.json",
+    "assets/questions/spring.json",
+    "assets/questions/sql.json",
+    "assets/questions/devops.json",
+    "assets/questions/arch.json",
+    "assets/questions/quarkus.json",
+    "assets/questions/angular.json",
+    "assets/questions/soft.json"
+  ]
+}

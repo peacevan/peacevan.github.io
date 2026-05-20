@@ -24,11 +24,11 @@
   .header{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm);}
   .header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px;}
   .logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;cursor:pointer;}
-  .logo-icon{width:34px;height:34px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-family:var(--font-mono);font-weight:500;letter-spacing:-1px;}
+  .logo-icon{width:34px;height:34px;background:var(--accent);border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;font-family:var(--font-mono);font-weight:500;}
   .logo-text{font-family:var(--font-serif);font-size:17px;color:var(--text);line-height:1.1;}
   .logo-sub{font-size:10px;font-family:var(--font-sans);color:var(--text-3);letter-spacing:.05em;text-transform:uppercase;}
-  .header-actions{display:flex;align-items:center;gap:8px;}
-  .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all var(--transition);text-decoration:none;white-space:nowrap;}
+  .header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+  .btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:13px;font-weight:500;cursor:pointer;border:none;transition:all var(--transition);text-decoration:none;}
   .btn-primary{background:var(--accent);color:#fff;}
   .btn-primary:hover{background:#a83408;transform:translateY(-1px);box-shadow:var(--shadow);}
   .btn-ghost{background:transparent;color:var(--text-2);border:1px solid var(--border);}
@@ -40,20 +40,20 @@
   .view{display:none;}.view.active{display:block;}
   .search-wrap{position:relative;margin-bottom:20px;}
   .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-3);pointer-events:none;}
-  .search-input{width:100%;padding:10px 12px 10px 38px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color var(--transition);}
+  .search-input{width:100%;padding:10px 12px 10px 38px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color var(--transition),box-shadow var(--transition);}
   .search-input:focus{border-color:var(--accent);}
   .search-input::placeholder{color:var(--text-3);}
   .tabs-wrap{overflow-x:auto;scrollbar-width:none;margin-bottom:20px;border-bottom:1.5px solid var(--border);}
   .tabs-wrap::-webkit-scrollbar{display:none;}
   .tabs{display:flex;gap:2px;min-width:max-content;}
-  .tab-btn{display:flex;align-items:center;gap:6px;padding:10px 16px;font-family:var(--font-sans);font-size:13px;font-weight:500;color:var(--text-3);background:transparent;border:none;cursor:pointer;white-space:nowrap;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:color var(--transition);}
+  .tab-btn{display:flex;align-items:center;gap:6px;padding:10px 16px;font-family:var(--font-sans);font-size:13px;font-weight:500;color:var(--text-3);background:transparent;border:none;cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color var(--transition),border-color var(--transition);}
   .tab-btn:hover{color:var(--text);}
   .tab-btn.active{color:var(--text);border-bottom-color:var(--tab-color,var(--accent));}
   .tab-dot{width:8px;height:8px;border-radius:50%;background:var(--tab-color,var(--accent));flex-shrink:0;}
   .tab-count{font-size:11px;background:var(--surface2);color:var(--text-3);padding:1px 6px;border-radius:10px;font-family:var(--font-mono);}
   .tab-btn.active .tab-count{background:var(--accent-light);color:var(--accent);}
   .q-list{display:flex;flex-direction:column;gap:8px;}
-  .q-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color var(--transition),box-shadow var(--transition);animation:fadeIn .2s ease both;}
+  .q-item{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color var(--transition),box-shadow var(--transition);animation:fadeIn .2s ease-out;}
   .q-item:hover{border-color:var(--border-strong);box-shadow:var(--shadow-sm);}
   .q-item.open{border-color:var(--accent-mid);box-shadow:var(--shadow);}
   .q-header{display:flex;align-items:flex-start;gap:12px;padding:14px 16px;cursor:pointer;user-select:none;}
@@ -83,13 +83,14 @@
   .form-sub{font-size:13px;color:var(--text-3);margin-bottom:24px;}
   .form-group{margin-bottom:18px;}
   .form-label{display:block;font-size:12px;font-weight:600;color:var(--text-2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
-  .form-control{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color var(--transition);resize:vertical;}
+  .form-control{width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px;color:var(--text);background:var(--surface);outline:none;transition:border-color var(--transition),box-shadow var(--transition);}
   .form-control:focus{border-color:var(--accent);}
   .form-control::placeholder{color:var(--text-3);}
-  select.form-control{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a857d' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-  .tag-input-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;background:var(--surface);cursor:text;transition:border-color var(--transition);}
+  select.form-control{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238a857d' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:34px;}
+  .tag-input-wrap{display:flex;flex-wrap:wrap;gap:6px;align-items:center;border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:8px 10px;background:var(--surface);cursor:text;transition:border-color var(--transition),box-shadow var(--transition);}
   .tag-input-wrap:focus-within{border-color:var(--accent);}
-  .tag-remove{margin-left:4px;cursor:pointer;opacity:.6;}.tag-remove:hover{opacity:1;}
+  .tag-remove{margin-left:4px;cursor:pointer;opacity:.6;}
+  .tag-remove:hover{opacity:1;}
   .tag-field{border:none;outline:none;font-family:var(--font-sans);font-size:13px;color:var(--text);background:transparent;min-width:120px;flex:1;}
   .tag-hint{font-size:11px;color:var(--text-3);margin-top:4px;}
   .form-footer{display:flex;gap:10px;justify-content:flex-end;margin-top:24px;padding-top:20px;border-top:1px solid var(--border);}
@@ -106,7 +107,9 @@
   mark{background:#fef08a;color:inherit;border-radius:2px;padding:0 1px;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
   @media(max-width:640px){
-    .header-inner{height:56px;}.logo-sub{display:none;}
+    .header-inner{height:auto;padding:10px 0;align-items:flex-start;}
+    .logo-sub{display:none;}
+    .header-actions{width:100%;justify-content:flex-start;}
     .app{padding:16px 14px;}.stats-row{gap:8px;}
     .stat-card{padding:10px 12px;min-width:90px;}.stat-num{font-size:22px;}
     .form-card{padding:20px 16px;}.q-header{padding:12px;}
@@ -127,10 +130,14 @@
       </div>
     </div>
     <div class="header-actions">
+      <input type="file" id="import-json-file" accept=".json,application/json" hidden />
       <button class="btn btn-ghost btn-sm" onclick="showView('lista')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         Perguntas
       </button>
+      <button class="btn btn-ghost btn-sm" onclick="document.getElementById('import-json-file').click()">Importar JSON</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportJSON()">Exportar JSON</button>
+      <button class="btn btn-ghost btn-sm" onclick="exportMD()">Exportar MD</button>
       <button class="btn btn-primary btn-sm" onclick="showView('cadastro')">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Nova Pergunta
@@ -177,7 +184,7 @@
         <div class="tag-input-wrap" id="tag-wrap" onclick="document.getElementById('tag-field').focus()">
           <input type="text" class="tag-field" id="tag-field" placeholder="Digite e pressione Enter ou vírgula…" maxlength="30"/>
         </div>
-        <div class="tag-hint">Pressione <kbd style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:10px">Enter</kbd> ou <kbd style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:10px">,</kbd> para adicionar</div>
+        <div class="tag-hint">Pressione <kbd style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:10px">Enter</kbd> ou <kbd style="background:var(--surface2);padding:1px 5px;border-radius:3px;font-size:10px">,</kbd> para adicionar uma tag.</div>
       </div>
       <div class="form-group">
         <label class="form-label">Resposta Completa</label>
@@ -207,571 +214,64 @@
 
 <script>
 const TECHS=[
-  {id:'java',   label:'Java',            color:'#e8541a'},
-  {id:'angular',label:'Angular',         color:'#c3002f'},
-  {id:'spring', label:'Spring Boot',     color:'#6db33f'},
-  {id:'sql',    label:'SQL / Banco',     color:'#2d6ea8'},
-  {id:'devops', label:'DevOps / Docker', color:'#4a4a8a'},
-  {id:'arch',   label:'Arquitetura',     color:'#7a5c28'},
-  {id:'quarkus',label:'Quarkus',         color:'#4695eb'},
-  {id:'soft',   label:'Soft Skills',     color:'#3d8a6e'},
+  {id:'java',label:'Java',color:'#e8541a'},
+  {id:'angular',label:'Angular',color:'#c3002f'},
+  {id:'spring',label:'Spring Boot',color:'#6db33f'},
+  {id:'sql',label:'SQL / Banco',color:'#2d6ea8'},
+  {id:'devops',label:'DevOps / Docker',color:'#4a4a8a'},
+  {id:'arch',label:'Arquitetura',color:'#7a5c28'},
+  {id:'quarkus',label:'Quarkus',color:'#4695eb'},
+  {id:'soft',label:'Soft Skills',color:'#3d8a6e'}
 ];
 
-const SEED=[
-  // ── JAVA ────────────────────────────────────────────────────
-  {id:'j01',tech:'java',
-   question:'Qual a diferença entre HashMap, ConcurrentHashMap e Hashtable?',
-   tags:['HashMap','ConcurrentHashMap','Hashtable','thread-safe','concorrência','collections','performance'],
-   answer:`HashMap: não é thread-safe, permite chave e valor null, melhor performance single-thread, iterator fail-fast. Java 1.2.
-
-ConcurrentHashMap: thread-safe por segmentos (locks parciais), não permite null, boa performance multi-thread — diferentes threads operam em buckets diferentes. Java 1.5.
-
-Hashtable: thread-safe via lock global no método inteiro, não permite null, performance ruim, iterator fail-fast. Legado (Java 1.0) — deve ser evitado.
-
-Quando usar:
-• HashMap → single-thread ou sincronização externa.
-• ConcurrentHashMap → múltiplas threads acessando o mapa simultaneamente.
-• Hashtable → evitar; use ConcurrentHashMap no lugar.`},
-
-  {id:'j02',tech:'java',
-   question:'Qual a diferença entre interface e classe abstrata em Java?',
-   tags:['interface','abstract','herança','POO','polimorfismo','default method','Java 8'],
-   answer:`Interface: define um contrato com métodos abstratos (e default/static a partir do Java 8). Atributos são public static final. Uma classe pode implementar múltiplas interfaces.
-
-Classe abstrata: pode ter estado (atributos de instância), construtores e métodos concretos. Uma classe herda apenas uma classe abstrata.
-
-Use interface para comportamentos compartilháveis entre hierarquias distintas.
-Use classe abstrata quando há lógica ou estado compartilhado entre subclasses relacionadas.
-
-A partir do Java 8, interfaces com métodos default reduziram a diferença prática entre os dois.`},
-
-  {id:'j03',tech:'java',
-   question:'Como garantir precisão em cálculos financeiros em Java?',
-   tags:['BigDecimal','RoundingMode','precisão','financeiro','HALF_EVEN','imutabilidade','Value Object'],
-   answer:`1. Usar BigDecimal em vez de double/float — ponto flutuante causa imprecisão decimal.
-2. Padronizar arredondamento com RoundingMode.HALF_EVEN (arredondamento bancário).
-3. Criar Value Objects imutáveis para dinheiro e taxas.
-4. Testes parametrizados cobrindo: zero, negativos, grandes valores, períodos irregulares.
-5. Validar cruzando resultados com planilhas de controle ou sistemas legados.
-6. Logar entradas e saídas de todos os cálculos para rastreabilidade.
-
-Exemplo:
-  BigDecimal valor = new BigDecimal("1000.00");
-  BigDecimal taxa  = new BigDecimal("0.05");
-  BigDecimal result = valor.multiply(taxa)
-      .setScale(2, RoundingMode.HALF_EVEN);`},
-
-  {id:'j04',tech:'java',
-   question:'O que é injeção de dependência (DI) e por que ela é importante?',
-   tags:['DI','IoC','Spring','CDI','desacoplamento','testabilidade','@Inject','@Autowired'],
-   answer:`DI é um padrão onde uma classe recebe suas dependências fornecidas externamente em vez de criá-las internamente. Pode ser via construtor (recomendado), setter ou campo.
-
-Benefícios:
-• Desacoplamento: depende de abstrações (interfaces), não de implementações.
-• Testabilidade: facilita mocks (Mockito) em testes unitários.
-• Manutenibilidade: mudanças na dependência não exigem alterar o consumidor.
-• IoC: o container (Spring, Quarkus/CDI) gerencia o ciclo de vida.
-
-Boa prática — injetar via construtor:
-  @Service
-  public class PagamentoService {
-    private final PagamentoRepository repo;
-    public PagamentoService(PagamentoRepository repo) {
-      this.repo = repo;
-    }
-  }
-Vantagens do construtor: imutabilidade, dependências explícitas, testável sem framework.`},
-
-  {id:'j05',tech:'java',
-   question:'Qual a diferença entre teste unitário, integração e end-to-end?',
-   tags:['teste unitário','integração','E2E','JUnit','Mockito','Testcontainers','Cypress','pirâmide de testes'],
-   answer:`Teste Unitário: testa unidade isolada (método/classe) sem dependências externas, usando mocks. Rápido, executa em milissegundos. Frameworks: JUnit 5, Mockito.
-
-Teste de Integração: testa interação entre componentes (service + repository, API + banco). Pode usar H2 em memória ou Testcontainers.
-
-Teste End-to-End (E2E): testa fluxo completo do ponto de vista do usuário — frontend, backend, banco e serviços externos. Ferramentas: Selenium, Cypress, Playwright.
-
-Pirâmide de Testes:
-  Unitários (muitos, baratos) → Integração (médio) → E2E (poucos, caros)
-
-Estratégia: base sólida de unitários, integração em pontos críticos, E2E nos fluxos de negócio mais importantes.`},
-
-  {id:'j06',tech:'java',
-   question:'Como tratar concorrência em uma API que processa pagamentos simultâneos?',
-   tags:['concorrência','@Version','bloqueio otimista','pessimista','idempotência','Saga','Redis','Kafka'],
-   answer:`1. Bloqueio Otimista (@Version JPA): verifica versão do registro; conflito lança OptimisticLockException.
-2. Bloqueio Pessimista (SELECT FOR UPDATE): trava o registro durante o processamento.
-3. Idempotência: idempotency-key garante que a mesma requisição não seja processada duas vezes.
-4. Fila/Queue: RabbitMQ ou Kafka para serializar processamento de pagamentos da mesma conta.
-5. Operação atômica: UPDATE conta SET saldo = saldo - ? WHERE id = ? AND saldo >= ?
-6. Distributed Lock: Redis RedLock ou database advisory locks para coordenar entre instâncias.
-7. Saga Pattern: em microsserviços, para consistência eventual em transações distribuídas.`},
-
-  // ── SPRING BOOT ─────────────────────────────────────────────
-  {id:'sp01',tech:'spring',
-   question:'Explique o ciclo completo de uma requisição REST em uma aplicação Spring.',
-   tags:['REST','DispatcherServlet','@Controller','@Service','@Repository','@Transactional','filtro','JWT'],
-   answer:`1. Cliente envia requisição HTTP para uma URL.
-2. Servidor Web (Nginx/Apache) encaminha ao container.
-3. DispatcherServlet do Spring intercepta.
-4. Filtros/Interceptors: autenticação JWT/OAuth, CORS, logging, rate limiting.
-5. Controller: mapeia via @GetMapping/@PostMapping, extrai @PathVariable / @RequestBody.
-6. DTO/Validação: JSON convertido para objeto Java, validado com @Valid / Bean Validation.
-7. Service: executa lógica de negócio e regras.
-8. Repository: acessa banco via JPA/Hibernate ou JDBC.
-9. @Transactional gerencia commit/rollback.
-10. Resposta serializada para JSON com status HTTP adequado (200/201/404/etc.).
-11. @ControllerAdvice intercepta exceções e retorna erros padronizados.`},
-
-  {id:'sp02',tech:'spring',
-   question:'Como funciona o ciclo de vida de um Bean no Spring?',
-   tags:['Bean','IoC','@PostConstruct','@PreDestroy','singleton','prototype','ApplicationContext','lifecycle'],
-   answer:`Ciclo:
-1. Instanciação pelo container.
-2. Injeção de dependências.
-3. @PostConstruct (ou InitializingBean.afterPropertiesSet()).
-4. Uso normal pela aplicação.
-5. @PreDestroy (ou DisposableBean.destroy()).
-6. Destruição.
-
-Escopos:
-• Singleton (padrão): uma instância por ApplicationContext.
-• Prototype: nova instância a cada injeção.
-• Request/Session: por requisição/sessão HTTP.
-
-@PostConstruct → inicialização (conexões, caches).
-@PreDestroy → limpeza de recursos.`},
-
-  {id:'sp03',tech:'spring',
-   question:'Quais boas práticas são importantes em APIs REST?',
-   tags:['REST','HTTP','status code','versionamento','paginação','OpenAPI','Swagger','segurança','HATEOAS'],
-   answer:`1. Recursos como substantivos no plural: /clientes, /pedidos.
-2. Métodos HTTP corretos: GET (leitura), POST (criação), PUT (total), PATCH (parcial), DELETE.
-3. Status HTTP semânticos: 200, 201, 204, 400, 401, 403, 404, 409, 500.
-4. Versionamento: /v1/clientes ou via header Accept.
-5. Paginação em listagens: ?page=0&size=20&sort=nome,asc.
-6. Idempotência: GET/PUT/DELETE idempotentes; POST via idempotency-key.
-7. Segurança: HTTPS, OAuth2/JWT, rate limiting, validação de entrada.
-8. Documentação: OpenAPI/Swagger com exemplos.
-9. Erros padronizados: { "codigo":"ERR001", "mensagem":"...", "detalhes":[...] }.
-10. Cache: headers Cache-Control, ETag para recursos pouco alterados.`},
-
-  {id:'sp04',tech:'spring',
-   question:'Qual a diferença entre PUT e PATCH?',
-   tags:['PUT','PATCH','HTTP','REST','idempotente','atualização parcial','atualização completa'],
-   answer:`PUT: atualização completa do recurso. Envia todos os campos; omitidos podem ser zerados. Idempotente.
-
-PATCH: atualização parcial. Envia apenas os campos a alterar; demais mantêm seus valores. Idempotente (RFC 5789).
-
-Exemplo:
-  PUT /clientes/123  → { nome, email, telefone } (todos os campos)
-  PATCH /clientes/123 → { email: "novo@email.com" } (só o que mudou)
-
-No backend, PATCH exige tratamento para aplicar apenas os campos recebidos (Map ou MapStruct com null-check).
-
-Regra: PUT para substituir o recurso inteiro; PATCH para correções pontuais.`},
-
-  {id:'sp05',tech:'spring',
-   question:'Como versionar APIs em produção?',
-   tags:['versionamento','API','URL path','header','breaking change','deprecation','Sunset','compatibilidade'],
-   answer:`Estratégias:
-1. URL Path (mais comum): /api/v1/clientes — simples, explícito, cacheável.
-2. Query Parameter: /api/clientes?version=1 — útil para testes.
-3. Header custom: Accept-Version: v1 — URL limpa.
-4. Content Negotiation: Accept: application/vnd.banco.v1+json — mais RESTful.
-
-Evolução:
-• Breaking changes (contrato alterado, campo removido) → nova versão.
-• Non-breaking (campo opcional adicionado) → mesma versão.
-• Deprecação: header Sunset com prazo de desativação.
-• Manter v1 em paralelo enquanto clientes migram para v2.`},
-
-  // ── SQL / BANCO ──────────────────────────────────────────────
-  {id:'sq01',tech:'sql',
-   question:'Qual a diferença entre INNER JOIN, LEFT JOIN, RIGHT JOIN e FULL JOIN?',
-   tags:['INNER JOIN','LEFT JOIN','RIGHT JOIN','FULL JOIN','NULL','SQL','Oracle','relacionamento'],
-   answer:`INNER JOIN: retorna apenas registros com correspondência em ambas as tabelas.
-
-LEFT JOIN: todos da tabela esquerda + correspondentes da direita (NULL onde não há match).
-
-RIGHT JOIN: todos da tabela direita + correspondentes da esquerda.
-
-FULL JOIN (FULL OUTER JOIN): todos de ambas as tabelas; NULL onde não há correspondência.
-
-Exemplos:
-  -- Clientes com pedidos
-  SELECT c.nome, p.valor FROM clientes c INNER JOIN pedidos p ON c.id = p.cliente_id;
-
-  -- Todos os clientes, mesmo sem pedidos
-  SELECT c.nome, p.valor FROM clientes c LEFT JOIN pedidos p ON c.id = p.cliente_id;
-
-  -- Todos de ambas as tabelas
-  SELECT c.nome, p.valor FROM clientes c FULL JOIN pedidos p ON c.id = p.cliente_id;`},
-
-  {id:'sq02',tech:'sql',
-   question:'O que é índice no Oracle e quando pode prejudicar a performance?',
-   tags:['índice','B-Tree','Bitmap','Oracle','DML','cardinalidade','over-indexing','EXPLAIN PLAN','fragmentação'],
-   answer:`Índice é uma estrutura (geralmente B-Tree) que acelera buscas — funciona como o índice de um livro. Oracle cria automaticamente para PK e UNIQUE.
-
-Tipos: B-Tree (padrão), Bitmap (data warehouse), Function-Based, Composite.
-
-Quando prejudica:
-• DML excessivo: INSERT/UPDATE/DELETE mais lentos pois o índice é atualizado junto.
-• Baixa cardinalidade: colunas M/F — full table scan pode ser mais rápido.
-• Over-indexing: muitos índices aumentam overhead de manutenção.
-• Fragmentação: após muitas operações DML o índice desbalancea — precisa de REBUILD.
-• Tabelas pequenas: Oracle pode ignorar o índice e preferir full table scan.
-
-Boas práticas: indexar colunas de WHERE, JOIN, ORDER BY com alta cardinalidade. Monitorar via V$OBJECT_USAGE.`},
-
-  {id:'sq03',tech:'sql',
-   question:'Como investigar e resolver lentidão em queries Oracle?',
-   tags:['EXPLAIN PLAN','AWR','ASH','Oracle','N+1','estatísticas','SQL tuning','índice','otimização'],
-   answer:`1. EXPLAIN PLAN / AUTOTRACE: identificar full table scans, nested loops ineficientes, sorts em disco.
-2. Executar query direto no SQL Developer vs via aplicação — isolar se o problema é no ORM ou no banco.
-3. Verificar índices nas colunas de JOIN e WHERE; confirmar se o otimizador os usa.
-4. Atualizar estatísticas: EXEC DBMS_STATS.GATHER_TABLE_STATS('schema','tabela');
-5. AWR/ASH Reports: identificar queries TOP, wait events, gargalos de I/O.
-6. Verificar N+1 queries, loops aninhados, carregamento excessivo de dados.
-7. Avaliar particionamento para tabelas grandes (range, hash).
-8. Hints como último recurso para forçar plano de execução.`},
-
-  {id:'sq04',tech:'sql',
-   question:'Explique FetchType.LAZY e EAGER e os problemas que podem ocorrer.',
-   tags:['LAZY','EAGER','JPA','Hibernate','N+1','LazyInitializationException','JOIN FETCH','EntityGraph'],
-   answer:`LAZY (Preguiçoso): relacionados carregados somente quando acessados. Padrão para @OneToMany e @ManyToMany. Economiza memória.
-
-EAGER (Ansioso): relacionados carregados junto com a entidade principal. Padrão para @OneToOne e @ManyToOne.
-
-Problemas LAZY:
-• LazyInitializationException: acessar coleção lazy fora de sessão aberta.
-• N+1 Queries: iterar sobre N entidades e acessar relacionamentos lazy = N+1 queries.
-
-Problemas EAGER:
-• Carrega dados desnecessários com JOINs complexos.
-• Cascata EAGER em múltiplos relacionamentos pode trazer quase todo o banco.
-
-Recomendação: LAZY por padrão; usar JOIN FETCH ou Entity Graph quando precisar dos relacionados.`},
-
-  {id:'sq05',tech:'sql',
-   question:'O que é o problema de N+1 queries e como resolvê-lo?',
-   tags:['N+1','JPA','Hibernate','JOIN FETCH','@BatchSize','Entity Graph','performance','ORM'],
-   answer:`N+1 ocorre quando 1 query retorna N entidades e, para cada uma, 1 query adicional carrega um relacionamento lazy — total: N+1 queries.
-
-Exemplo:
-  List<Cliente> clientes = repo.findAll();       // 1 query
-  for (Cliente c : clientes) {
-    c.getPedidos().size();  // 1 query por cliente
-  }
-
-Soluções:
-1. JOIN FETCH: SELECT c FROM Cliente c JOIN FETCH c.pedidos
-2. Entity Graph: @NamedEntityGraph especificando atributos a carregar.
-3. @BatchSize(size=20): carrega relacionamentos em lotes.
-4. Projeções DTO ou queries nativas quando não precisar das entidades completas.`},
-
-  {id:'sq06',tech:'sql',
-   question:'Qual a diferença entre persist, merge e save no JPA/Spring Data?',
-   tags:['persist','merge','save','JPA','Hibernate','Spring Data','EntityManager','upsert','detached'],
-   answer:`persist (JPA): insere nova entidade. Se já tiver ID lança exceção. Executa no flush/commit.
-
-merge (JPA): copia estado de entidade detached para o contexto. Se não existe → insere; se existe → atualiza. Retorna entidade gerenciada.
-
-save (Spring Data): se ID null → chama persist(); se tem ID → chama merge(). Equivale a upsert.
-
-Quando usar:
-• persist → certeza de entidade nova, controle explícito.
-• merge → entidade vinda de API externa, sincronizar com contexto.
-• save → CRUD simples no Spring Data JPA.`},
-
-  // ── DEVOPS ──────────────────────────────────────────────────
-  {id:'dv01',tech:'devops',
-   question:'Qual a diferença entre container Docker e máquina virtual (VM)?',
-   tags:['Docker','VM','container','kernel','namespace','cgroup','imagem','isolamento','hypervisor'],
-   answer:`VM: virtualiza hardware completo via hipervisor. Cada VM tem SO e kernel próprios. Isolamento forte, mas pesado (GBs, boot em minutos).
-
-Container Docker: compartilha o kernel do host via namespaces e cgroups, isolando apenas o processo e suas dependências. Leve (MBs), inicia em segundos.
-
-Diferenças práticas:
-• Tamanho: containers MBs vs GBs de VMs.
-• Startup: containers em segundos, VMs em minutos.
-• Isolamento: VMs mais forte (kernel separado).
-• Portabilidade: Docker empacota app + dependências — roda em qualquer lugar.
-• Imagens em layers: eficiência de armazenamento e build incremental.
-
-Docker: ideal para microsserviços e cloud-native. VMs: quando isolamento total ou SOs diferentes são necessários.`},
-
-  {id:'dv02',tech:'devops',
-   question:'O que é CI/CD e quais benefícios ele traz?',
-   tags:['CI','CD','pipeline','Jenkins','GitHub Actions','Azure DevOps','deploy','automação','qualidade'],
-   answer:`CI (Continuous Integration): integrar código várias vezes ao dia. Cada push dispara build + testes automáticos para detectar erros rapidamente.
-
-CD (Continuous Delivery/Deployment):
-• Delivery: código sempre pronto para deploy (aprovação manual antes de produção).
-• Deployment: deploy em produção também automático.
-
-Benefícios:
-• Feedback rápido: erros detectados minutos após o commit.
-• Menor risco: deploys pequenos e frequentes são mais previsíveis.
-• Automação: elimina tarefas manuais e propensas a erro.
-• Qualidade: testes garantem critérios antes de ir para produção.
-• Rastreabilidade: cada deploy vinculado a um commit.
-
-Ferramentas: Jenkins, GitHub Actions, GitLab CI, Azure DevOps, CircleCI.`},
-
-  {id:'dv03',tech:'devops',
-   question:'Como você reagiria a um deploy em produção que começa a falhar?',
-   tags:['incidente','rollback','feature flag','circuit breaker','post-mortem','observabilidade','logs','on-call'],
-   answer:`1. Avaliar gravidade: logs, métricas (CPU, memória, error rate), impacto nos usuários.
-2. Comunicação imediata: alertar time, PO e stakeholders. Abrir canal de incidente.
-3. Rollback rápido: reverter para versão estável — restaurar o serviço tem prioridade.
-4. Se não puder fazer rollback: isolar via feature flag ou circuit breaker.
-5. Investigar em paralelo: logs, stack traces, mudanças recentes, configurações.
-6. Confirmar estabilização e monitorar por período após a correção.
-7. Post-mortem blameless: identificar o que falhou no processo.
-8. Ações corretivas: mais testes, canary deployment, monitoramento aprimorado.`},
-
-  {id:'dv04',tech:'devops',
-   question:'O que você conhece sobre AWS (EC2, S3, Lambda, RDS)?',
-   tags:['AWS','EC2','S3','Lambda','RDS','serverless','cloud','Multi-AZ','Read Replica','Azure'],
-   answer:`EC2: servidor virtual na nuvem. Controle total (SO, tamanho, security groups). Escala por demanda.
-
-S3: armazenamento de objetos altamente durável (11 noves). Backups, static hosting, data lake. Classes de armazenamento (Standard, Glacier) otimizam custo.
-
-Lambda: serverless. Executa código por evento (API Gateway, S3, DynamoDB Streams) sem gerenciar servidor. Cobrado pelo tempo de execução.
-
-RDS: banco gerenciado (MySQL, PostgreSQL, Oracle, SQL Server). AWS cuida de backups, patching, failover. Suporta Multi-AZ (alta disponibilidade) e Read Replicas (performance de leitura).
-
-Nota: meu dia a dia atual é Azure DevOps, mas tenho conhecimento teórico e experiência prática com AWS em projetos anteriores.`},
-
-  // ── ARQUITETURA ─────────────────────────────────────────────
-  {id:'ar01',tech:'arch',
-   question:'O que é microsserviço? Quais as vantagens e os desafios?',
-   tags:['microsserviço','monólito','DDD','Saga','Kubernetes','escalabilidade','autonomia','event sourcing'],
-   answer:`Microsserviço: aplicação dividida em serviços pequenos, independentes e autônomos, cada um responsável por uma capacidade de negócio, com banco próprio e ciclo de deploy independente.
-
-Vantagens:
-• Escalabilidade independente por serviço.
-• Tecnologia heterogênea por domínio.
-• Resiliência: falha isolada não derruba tudo (com circuit breakers).
-• Times autônomos — desenvolvem e deployam independentemente.
-
-Desafios:
-• Complexidade distribuída: logging, tracing, debugging mais difíceis.
-• Consistência de dados: exige Saga ou consistência eventual.
-• DevOps maduro: CI/CD, Kubernetes, service mesh.
-• Overhead operacional: múltiplos bancos e deploys, maior custo de infra.
-• Segurança entre serviços: mTLS, JWT.`},
-
-  {id:'ar02',tech:'arch',
-   question:'O que é CQRS e quando utilizá-lo?',
-   tags:['CQRS','Command','Query','DDD','event sourcing','leitura','escrita','escalabilidade'],
-   answer:`CQRS (Command Query Responsibility Segregation): separa modelos de escrita (Command) e leitura (Query).
-
-• Commands: alteram estado (criar, atualizar, deletar).
-• Queries: apenas leem, sem efeitos colaterais.
-
-Benefícios:
-• Escalar leitura e escrita independentemente.
-• Modelo de leitura desnormalizado para performance.
-• Facilita event sourcing e auditoria.
-• Código mais alinhado com linguagem de negócio (DDD).
-
-Quando usar:
-• Carga de leitura muito maior que escrita.
-• Domínios complexos.
-• Necessidade de auditoria completa ou event sourcing.
-
-Quando evitar: CRUDs simples — CQRS adiciona complexidade desnecessária.`},
-
-  {id:'ar03',tech:'arch',
-   question:'Quando usar cache (Redis ou Red Hat Data Grid)?',
-   tags:['Redis','cache','Infinispan','Data Grid','sessão','rate limiting','latência','invalidação','pub/sub'],
-   answer:`Quando usar:
-• Dados de leitura frequente com pouca alteração: listas de domínio, taxas de câmbio.
-• Alta latência de banco: queries complexas que demoram segundos.
-• Alta concorrência de leitura simultânea.
-• Sessões de usuário em ambientes stateless.
-• Rate limiting: controlar requisições por cliente.
-• Resultados de cálculos pesados: relatórios, cálculos financeiros.
-
-Redis vs Red Hat Data Grid:
-• Redis: simples, rápido, estruturas diversas (hashes, listas, sorted sets). Ótimo para sessões, caching, filas pub/sub, rate limiting.
-• Data Grid (Infinispan): cache distribuído enterprise. Replicação síncrona/assíncrona, transações XA, queries. Ideal para clusters Java EE complexos.
-
-Cenário bancário: taxas de juros do dia, limites de crédito, configurações de produtos.`},
-
-  {id:'ar04',tech:'arch',
-   question:'Como lidar com indisponibilidade de um serviço externo em produção?',
-   tags:['Circuit Breaker','Resilience4j','fallback','retry','bulkhead','timeout','observabilidade','SLA','fail-fast'],
-   answer:`1. Circuit Breaker (Resilience4j): circuito "abre" após falhas repetidas — chamadas subsequentes falham imediatamente (fail-fast), evitando timeout em cascata.
-2. Fallback: retornar cache, valor padrão ou mensagem amigável ao usuário.
-3. Retry com exponential backoff e jitter: tentar novamente sem sobrecarregar o serviço.
-4. Timeout agressivo: não bloquear threads indefinidamente.
-5. Bulkhead: thread pools isolados para que falha de um serviço não esgote os recursos da aplicação.
-6. Monitoramento: alertar quando thresholds de erro/latência são ultrapassados.
-7. Degradação graceful: operar com funcionalidades reduzidas em vez de parar completamente.
-8. Health Checks: endpoint que verifica dependências críticas.
-9. Post-mortem: analisar violação de SLA e negociar melhorias.`},
-
-  // ── QUARKUS ─────────────────────────────────────────────────
-  {id:'qu01',tech:'quarkus',
-   question:'Qual a diferença entre Spring Boot e Quarkus? Quando escolher cada um?',
-   tags:['Quarkus','Spring Boot','GraalVM','native image','cloud-native','startup','memória','microsserviço'],
-   answer:`Spring Boot: ecossistema maduro e abrangente (Security, Data, Cloud, Batch). Vasta documentação, comunidade ativa. Ideal para sistemas complexos, legados e forte integração com módulos Spring.
-
-Quarkus: otimizado para cloud-native e Kubernetes. Startup em milissegundos, memória drasticamente menor — graças à compilação nativa (GraalVM) e carregamento sob demanda de extensões. Compatível com MicroProfile e Jakarta EE.
-
-Quando escolher:
-• Spring Boot → legado, equipe com forte background Spring, ecossistema amplo necessário.
-• Quarkus → microsserviços, containers, serverless — startup rápido e footprint de memória críticos.
-
-Ambos suportam JPA, REST, mensageria e segurança. A escolha depende do contexto: cloud-first → Quarkus; legado/Spring ecosystem → Spring Boot.`},
-
-  {id:'qu02',tech:'quarkus',
-   question:'O que é compilação nativa com GraalVM e quais as implicações?',
-   tags:['GraalVM','native image','AOT','startup','reflexão','Quarkus','build time','binário'],
-   answer:`GraalVM Native Image compila a aplicação Java para binário nativo executável (AOT), eliminando a JVM em runtime.
-
-Vantagens:
-• Startup em milissegundos (vs segundos com JVM).
-• Consumo de memória muito menor — essencial em Kubernetes/serverless.
-• Binário autossuficiente, sem JRE instalado.
-
-Implicações no desenvolvimento:
-• Reflexão deve ser declarada explicitamente — o compilador AOT não infere reflexão dinâmica.
-• Bibliotecas com reflexão pesada precisam de adaptadores.
-• Build mais lento (minutos) que build JVM.
-• Quarkus abstrai a maioria das limitações via extensões e processamento em build time.
-• Debugging do binário nativo é mais complexo.
-
-Para REST, JPA, CDI e JSON, o Quarkus funciona nativamente sem configuração adicional.`},
-
-  // ── ANGULAR ─────────────────────────────────────────────────
-  {id:'an01',tech:'angular',
-   question:'Qual a diferença entre Component, Service e Module no Angular?',
-   tags:['Component','Service','Module','NgModule','@Injectable','standalone','lifecycle','DI'],
-   answer:`Component: responsável pela view — template HTML, CSS e lógica de apresentação. Menor unidade de UI reutilizável.
-
-Service: contém lógica de negócio, comunicação com API, manipulação de dados. Anotado com @Injectable, compartilhado entre componentes via DI.
-
-Module (NgModule): agrupa componentes, services, pipes e directives. Controla importações e exportações.
-
-Fluxo: Component → chama Service → Service faz HTTP → Component atualiza a view.
-
-Angular 14+ (Standalone): módulos opcionais. Componentes standalone importam diretamente o que precisam — menos boilerplate, melhor tree-shaking.`},
-
-  {id:'an02',tech:'angular',
-   question:'O que é RxJS e Observable? Como são usados no Angular?',
-   tags:['RxJS','Observable','Subject','BehaviorSubject','pipe','operators','subscription','async pipe','memory leak'],
-   answer:`RxJS: biblioteca para programação reativa com Observables — fluxos de dados assíncronos de forma declarativa.
-
-Observable: coleção lazy que emite valores ao longo do tempo. Diferente de Promise (resolve uma vez), pode emitir múltiplos valores.
-
-Conceitos:
-• Observer: consome valores (next, error, complete).
-• Operators: map, filter, switchMap, mergeMap, debounceTime, catchError.
-• Subscription: deve ser cancelada (unsubscribe) para evitar memory leaks.
-• Subject/BehaviorSubject: Observable + Observer — comunicação entre componentes.
-
-No Angular:
-• HttpClient retorna Observables.
-• Eventos de formulário (valueChanges, statusChanges).
-• Gerenciamento de estado (NgRx, Akita).
-• async pipe subscreve e cancela automaticamente no template.`},
-
-  {id:'an03',tech:'angular',
-   question:'Como melhorar a performance em aplicações Angular?',
-   tags:['Lazy Loading','OnPush','trackBy','Virtual Scroll','unsubscribe','SSR','Angular Universal','bundle','tree shaking'],
-   answer:`1. Lazy Loading: carregar módulos/features sob demanda (loadChildren).
-2. ChangeDetectionStrategy.OnPush: verifica apenas quando @Inputs mudam ou eventos são disparados.
-3. trackBy em *ngFor: evitar re-renderização completa de listas.
-4. Unsubscribe: takeUntil, async pipe ou take(1) em ngOnDestroy — evitar memory leaks.
-5. Virtual Scrolling: cdk-virtual-scroll-viewport para listas grandes.
-6. Otimização de bundles: code splitting, tree shaking, webpack-bundle-analyzer.
-7. Web Workers: mover processamento pesado para não bloquear a UI.
-8. Preloading: PreloadAllModules ou estratégia customizada.
-9. SSR: Angular Universal para melhorar SEO e tempo de primeira renderização.
-10. Pipes puros: Angular cacheia o resultado se inputs não mudarem.`},
-
-  {id:'an04',tech:'angular',
-   question:'Qual a diferença entre Observable e Promise no Angular?',
-   tags:['Observable','Promise','RxJS','async','cancelável','HttpClient','async pipe','fluxo','toPromise'],
-   answer:`Promise: valor futuro único. Não cancelável. Executa imediatamente. Resolve uma vez.
-
-Observable (RxJS): fluxo de valores ao longo do tempo. Lazy — executa só com subscriber. Cancelável (unsubscribe). Emite múltiplos valores. Suporta operadores poderosos.
-
-Na prática:
-• HttpClient retorna Observable — não Promise.
-• Para WebSocket, polling, eventos de formulário: Observable é muito superior.
-• async pipe no template gerencia subscribe/unsubscribe automaticamente.
-• Converter para Promise: firstValueFrom(obs$) ou lastValueFrom(obs$).
-
-Use Observable sempre que possível no Angular para aproveitar os operadores RxJS.`},
-
-  // ── SOFT SKILLS ─────────────────────────────────────────────
-  {id:'ss01',tech:'soft',
-   question:'Como você lida com discordâncias técnicas dentro do time?',
-   tags:['comunicação','conflito','colaboração','ADR','decisão técnica','feedback','pair programming'],
-   answer:`Escuto ativamente antes de defender minha posição. Separo a discussão técnica da questão pessoal.
-
-Busco dados e evidências: benchmarks, documentação, experiências documentadas. Evito argumentos de autoridade.
-
-Se não há consenso, proponho uma prova de conceito ou teste A/B com critérios claros.
-
-Respeito a decisão do tech lead/arquiteto, mas registro minha visão por escrito (ticket, ADR) — cria histórico revisável no futuro.
-
-Acredito que divergências técnicas saudáveis, bem conduzidas, elevam a qualidade das soluções.`},
-
-  {id:'ss02',tech:'soft',
-   question:'Como você lida com pressão e prazos curtos?',
-   tags:['pressão','prazo','MVP','Eisenhower','priorização','comunicação','scrum','transparência'],
-   answer:`Mantenho a calma e priorizo com a matriz de Eisenhower (urgente/importante).
-
-Comunico transparentemente com o time e PO sobre o que é viável no prazo versus o que precisa ser negociado.
-
-Foco no MVP: entregar o que gera valor com qualidade mínima aceitável e iterar. Não sacrifico testes críticos nem segurança, mas posso adiar refatorações cosméticas.
-
-Quebro grandes entregas em tarefas menores — dá visibilidade de progresso e mantém o time motivado.
-
-Peço ajuda quando necessário: distribuir carga e revisar código em paralelo acelera a entrega.`},
-
-  {id:'ss03',tech:'soft',
-   question:'Fale sobre um bug difícil que você resolveu.',
-   tags:['debugging','produção','idempotência','Redis','UNIQUE CONSTRAINT','concorrência','logs','análise'],
-   answer:`Contexto: na Caixa Econômica Federal, transações financeiras duplicavam registros em produção, apenas em carga alta, impossível reproduzir em desenvolvimento.
-
-Investigação: analisei logs de auditoria e percebi que o problema ocorria quando duas requisições idênticas chegavam com intervalo de milissegundos — o sistema não tinha controle de idempotência.
-
-Solução:
-1. Idempotency-key com Redis: cada requisição recebe chave única do cliente; antes de processar, verificamos se já foi processada.
-2. UNIQUE CONSTRAINT no banco como barreira final de segurança.
-3. Logs de auditoria detalhados em todas as operações financeiras.
-
-Aprendizado: pensar em concorrência desde o design e manter logs detalhados em sistemas financeiros é essencial.`},
-
-  {id:'ss04',tech:'soft',
-   question:'Prefere trabalhar sozinho ou em equipe? Por quê?',
-   tags:['equipe','colaboração','pair programming','autonomia','code review','brainstorm','senioridade'],
-   answer:`Prefiro equipe. Revisão de código, pair programming e brainstorms sempre elevam a qualidade além do que eu faria sozinho. Perspectivas diferentes identificam riscos e oportunidades que eu poderia não perceber.
-
-Valorizo foco individual para tarefas que exigem concentração profunda: bugs complexos, refatoração crítica, estudo.
-
-O ideal: trabalhar com o time para alinhamento e decisões arquiteturais, com autonomia para executar tarefas técnicas com responsabilidade.
-
-Com 14 anos em equipes de grande porte (Sebrae, Fiocruz, INEP, Caixa), aprendi que o resultado coletivo supera a soma das contribuições individuais quando há comunicação e confiança.`},
-];
-
-// ─────────────────────────────────────────────────────
-const STORAGE_KEY='interview_prep_v3';
-let questions=[],currentTab='java',editId=null,pendingDeleteId=null,formTags=[];
-
-function load(){
+const STORAGE_KEY='interview_prep_v4';
+const JSON_URL='questions.json';
+let questions=[],baseQuestions=[],currentTab='java',editId=null,pendingDeleteId=null,formTags=[];
+
+function clone(v){return JSON.parse(JSON.stringify(v));}
+function normalizeQuestion(q){
+  return {
+    id:String(q.id||Date.now()),
+    tech:q.tech||'java',
+    question:String(q.question||'').trim(),
+    tags:Array.isArray(q.tags)?q.tags.filter(Boolean).slice(0,8):[],
+    answer:String(q.answer||'').trim(),
+    createdAt:q.createdAt||new Date().toISOString()
+  };
+}
+function dedupeQuestions(list){
+  const map=new Map();
+  (list||[]).forEach(item=>{
+    const q=normalizeQuestion(item);
+    if(q.question&&q.answer)map.set(q.id,q);
+  });
+  return Array.from(map.values());
+}
+async function loadBaseQuestions(){
+  const res=await fetch(JSON_URL,{cache:'no-store'});
+  if(!res.ok)throw new Error('Falha ao carregar questions.json');
+  const data=await res.json();
+  if(!Array.isArray(data))throw new Error('questions.json deve conter um array');
+  return dedupeQuestions(data);
+}
+function loadLocalQuestions(){
   try{
     const raw=localStorage.getItem(STORAGE_KEY);
-    questions=raw?JSON.parse(raw):JSON.parse(JSON.stringify(SEED));
-  }catch(e){questions=JSON.parse(JSON.stringify(SEED));}
-  if(!questions.length){questions=JSON.parse(JSON.stringify(SEED));}
+    if(!raw)return [];
+    const data=JSON.parse(raw);
+    return Array.isArray(data)?dedupeQuestions(data):[];
+  }catch(e){return [];}
+}
+function syncQuestions(){
+  const map=new Map();
+  baseQuestions.forEach(q=>map.set(q.id,q));
+  loadLocalQuestions().forEach(q=>map.set(q.id,q));
+  questions=Array.from(map.values());
+}
+async function load(){
+  try{baseQuestions=await loadBaseQuestions();}
+  catch(e){console.error(e);baseQuestions=[];}
+  syncQuestions();
 }
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(questions));}
 
@@ -781,9 +281,7 @@ function showView(v){
   if(v==='lista')renderAll();
   if(v==='cadastro')setupForm();
 }
-
 function renderAll(){renderStats();renderTabs();renderList();}
-
 function renderStats(){
   const total=questions.length;
   const techs=TECHS.filter(t=>questions.some(q=>q.tech===t.id)).length;
@@ -792,7 +290,6 @@ function renderStats(){
     <div class="stat-card"><div class="stat-num">${techs}</div><div class="stat-label">Tecnologias</div></div>
     <div class="stat-card"><div class="stat-num">${TECHS.length}</div><div class="stat-label">Abas</div></div>`;
 }
-
 function renderTabs(){
   document.getElementById('tabs-container').innerHTML=TECHS.map(t=>{
     const count=questions.filter(q=>q.tech===t.id).length;
@@ -801,9 +298,7 @@ function renderTabs(){
       <span class="tab-count">${count}</span></button>`;
   }).join('');
 }
-
 function switchTab(id){currentTab=id;document.getElementById('search-input').value='';renderTabs();renderList();}
-
 function renderList(){
   const search=(document.getElementById('search-input').value||'').toLowerCase().trim();
   const filtered=questions.filter(q=>{
@@ -835,32 +330,25 @@ function renderList(){
       <div class="q-answer">
         <div class="q-answer-text">${esc(q.answer)}</div>
         <div class="q-answer-actions">
-          <button class="btn btn-ghost btn-sm" onclick="editQ('${q.id}')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Editar
-          </button>
-          <button class="btn btn-danger btn-sm" onclick="confirmDelete('${q.id}')">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>Excluir
-          </button>
+          <button class="btn btn-ghost btn-sm" onclick="editQ('${q.id}')">Editar</button>
+          <button class="btn btn-danger btn-sm" onclick="confirmDelete('${q.id}')">Excluir</button>
         </div>
       </div>
     </div>`;
   }).join('');
 }
-
 function hl(text,search){
   if(!search)return esc(text);
   return esc(text).replace(new RegExp(`(${escRe(search)})`,'gi'),'<mark>$1</mark>');
 }
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function escRe(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
-
 function toggleQ(id){
   const el=document.getElementById('qitem-'+id);
   const wasOpen=el.classList.contains('open');
   document.querySelectorAll('.q-item.open').forEach(i=>i.classList.remove('open'));
   if(!wasOpen)el.classList.add('open');
 }
-
 function setupForm(id){
   editId=id||null;formTags=[];
   const sel=document.getElementById('f-tech');
@@ -876,13 +364,13 @@ function setupForm(id){
   }
   renderFormTags();hideAlerts();
   const field=document.getElementById('tag-field');
+  field.value='';
   field.onkeydown=function(e){
     if((e.key==='Enter'||e.key===',')&&this.value.trim()){
       e.preventDefault();addTag(this.value.trim().replace(/,/g,''));this.value='';
     }else if(e.key==='Backspace'&&!this.value&&formTags.length){formTags.pop();renderFormTags();}
   };
 }
-
 function addTag(val){
   val=val.trim();if(!val)return;
   if(formTags.length>=8){showError('Máximo de 8 palavras-chave.');return;}
@@ -900,7 +388,6 @@ function renderFormTags(){
     wrap.insertBefore(span,field);
   });
 }
-
 function saveQuestion(){
   const tech=document.getElementById('f-tech').value.trim();
   const question=document.getElementById('f-question').value.trim();
@@ -918,15 +405,13 @@ function saveQuestion(){
     const idx=questions.findIndex(q=>q.id===editId);
     if(idx>-1)questions[idx]={...questions[idx],tech,question,answer,tags:formTags};
   }else{
-    questions.push({id:Date.now().toString(),tech,question,answer,tags:formTags,createdAt:new Date().toISOString()});
+    questions.push({id:Date.now().toString(),tech,question,answer,tags:clone(formTags),createdAt:new Date().toISOString()});
   }
   save();showSuccess(editId?'Pergunta atualizada!':'Pergunta cadastrada com sucesso!');
   setTimeout(()=>{currentTab=tech;showView('lista');},900);
 }
-
 function cancelForm(){showView('lista');}
 function editQ(id){editId=id;setupForm(id);showView('cadastro');}
-
 function confirmDelete(id){
   pendingDeleteId=id;
   document.getElementById('modal-confirm-btn').onclick=()=>{
@@ -937,12 +422,48 @@ function confirmDelete(id){
 }
 function closeModal(){document.getElementById('modal-delete').classList.remove('open');pendingDeleteId=null;}
 document.getElementById('modal-delete').addEventListener('click',function(e){if(e.target===this)closeModal();});
-
 function showError(msg){const el=document.getElementById('form-error');el.textContent=msg;el.classList.add('show');el.scrollIntoView({behavior:'smooth',block:'nearest'});}
-function showSuccess(msg){document.getElementById('form-success').textContent=msg;document.getElementById('form-success').classList.add('show');}
+function showSuccess(msg){const el=document.getElementById('form-success');el.textContent=msg;el.classList.add('show');}
 function hideAlerts(){document.getElementById('form-error').classList.remove('show');document.getElementById('form-success').classList.remove('show');}
-
-load();renderAll();
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(questions,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  const url=URL.createObjectURL(blob);
+  a.href=url;a.download='questions-export.json';a.click();URL.revokeObjectURL(url);
+}
+function exportMD(){
+  let md='# Interview Prep\n\n';
+  TECHS.forEach(tech=>{
+    const items=questions.filter(q=>q.tech===tech.id);
+    if(!items.length)return;
+    md+=`## ${tech.label}\n\n`;
+    items.forEach(q=>{
+      md+=`### Pergunta\n${q.question}\n\n`;
+      md+=`### Tags\n${(q.tags||[]).join(', ')}\n\n`;
+      md+=`### Resposta\n${q.answer}\n\n---\n\n`;
+    });
+  });
+  const blob=new Blob([md],{type:'text/markdown'});
+  const a=document.createElement('a');
+  const url=URL.createObjectURL(blob);
+  a.href=url;a.download='questions-export.md';a.click();URL.revokeObjectURL(url);
+}
+async function handleImportFile(file){
+  const text=await file.text();
+  const data=JSON.parse(text);
+  if(!Array.isArray(data))throw new Error('O JSON precisa conter um array de perguntas.');
+  questions=dedupeQuestions(data);
+  save();renderAll();showView('lista');
+}
+document.getElementById('import-json-file').addEventListener('change',async function(e){
+  const file=e.target.files&&e.target.files[0];
+  if(!file)return;
+  try{await handleImportFile(file);}
+  catch(err){alert(err.message||'Erro ao importar JSON.');}
+  finally{e.target.value='';}
+});
+async function init(){await load();renderAll();}
+init();
 </script>
 </body>
 </html>

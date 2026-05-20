@@ -1,0 +1,730 @@
+[
+  {
+    "id": "j01",
+    "tech": "java",
+    "question": "Qual a diferença entre HashMap, ConcurrentHashMap e Hashtable?",
+    "tags": [
+      "HashMap",
+      "ConcurrentHashMap",
+      "Hashtable",
+      "thread-safe",
+      "concorrência",
+      "collections",
+      "performance"
+    ],
+    "answer": "HashMap: não é thread-safe, permite chave e valor null, melhor performance single-thread, iterator fail-fast. Java 1.2.\n\nConcurrentHashMap: thread-safe por segmentos (locks parciais), não permite null, boa performance multi-thread — diferentes threads operam em buckets diferentes. Java 1.5.\n\nHashtable: thread-safe via lock global no método inteiro, não permite null, performance ruim, iterator fail-fast. Legado (Java 1.0) — deve ser evitado.\n\nQuando usar:\n• HashMap → single-thread ou sincronização externa.\n• ConcurrentHashMap → múltiplas threads acessando o mapa simultaneamente.\n• Hashtable → evitar; use ConcurrentHashMap no lugar."
+  },
+  {
+    "id": "j02",
+    "tech": "java",
+    "question": "Qual a diferença entre interface e classe abstrata em Java?",
+    "tags": [
+      "interface",
+      "abstract",
+      "herança",
+      "POO",
+      "polimorfismo",
+      "default method",
+      "Java 8"
+    ],
+    "answer": "Interface: define um contrato com métodos abstratos (e default/static a partir do Java 8). Atributos são public static final. Uma classe pode implementar múltiplas interfaces.\n\nClasse abstrata: pode ter estado (atributos de instância), construtores e métodos concretos. Uma classe herda apenas uma classe abstrata.\n\nUse interface para comportamentos compartilháveis entre hierarquias distintas.\nUse classe abstrata quando há lógica ou estado compartilhado entre subclasses relacionadas.\n\nA partir do Java 8, interfaces com métodos default reduziram a diferença prática entre os dois."
+  },
+  {
+    "id": "j03",
+    "tech": "java",
+    "question": "Como garantir precisão em cálculos financeiros em Java?",
+    "tags": [
+      "BigDecimal",
+      "RoundingMode",
+      "precisão",
+      "financeiro",
+      "HALF_EVEN",
+      "imutabilidade",
+      "Value Object"
+    ],
+    "answer": "1. Usar BigDecimal em vez de double/float — ponto flutuante causa imprecisão decimal.\n2. Padronizar arredondamento com RoundingMode.HALF_EVEN (arredondamento bancário).\n3. Criar Value Objects imutáveis para dinheiro e taxas.\n4. Testes parametrizados cobrindo: zero, negativos, grandes valores, períodos irregulares.\n5. Validar cruzando resultados com planilhas de controle ou sistemas legados.\n6. Logar entradas e saídas de todos os cálculos para rastreabilidade.\n\nExemplo:\n  BigDecimal valor = new BigDecimal(\"1000.00\");\n  BigDecimal taxa  = new BigDecimal(\"0.05\");\n  BigDecimal result = valor.multiply(taxa)\n      .setScale(2, RoundingMode.HALF_EVEN);"
+  },
+  {
+    "id": "j04",
+    "tech": "java",
+    "question": "O que é injeção de dependência (DI) e por que ela é importante?",
+    "tags": [
+      "DI",
+      "IoC",
+      "Spring",
+      "CDI",
+      "desacoplamento",
+      "testabilidade",
+      "@Inject",
+      "@Autowired"
+    ],
+    "answer": "DI é um padrão onde uma classe recebe suas dependências fornecidas externamente em vez de criá-las internamente. Pode ser via construtor (recomendado), setter ou campo.\n\nBenefícios:\n• Desacoplamento: depende de abstrações (interfaces), não de implementações.\n• Testabilidade: facilita mocks (Mockito) em testes unitários.\n• Manutenibilidade: mudanças na dependência não exigem alterar o consumidor.\n• IoC: o container (Spring, Quarkus/CDI) gerencia o ciclo de vida.\n\nBoa prática — injetar via construtor:\n  @Service\n  public class PagamentoService {\n    private final PagamentoRepository repo;\n    public PagamentoService(PagamentoRepository repo) {\n      this.repo = repo;\n    }\n  }\nVantagens do construtor: imutabilidade, dependências explícitas, testável sem framework."
+  },
+  {
+    "id": "j05",
+    "tech": "java",
+    "question": "Qual a diferença entre teste unitário, integração e end-to-end?",
+    "tags": [
+      "teste unitário",
+      "integração",
+      "E2E",
+      "JUnit",
+      "Mockito",
+      "Testcontainers",
+      "Cypress",
+      "pirâmide de testes"
+    ],
+    "answer": "Teste Unitário: testa unidade isolada (método/classe) sem dependências externas, usando mocks. Rápido, executa em milissegundos. Frameworks: JUnit 5, Mockito.\n\nTeste de Integração: testa interação entre componentes (service + repository, API + banco). Pode usar H2 em memória ou Testcontainers.\n\nTeste End-to-End (E2E): testa fluxo completo do ponto de vista do usuário — frontend, backend, banco e serviços externos. Ferramentas: Selenium, Cypress, Playwright.\n\nPirâmide de Testes:\n  Unitários (muitos, baratos) → Integração (médio) → E2E (poucos, caros)\n\nEstratégia: base sólida de unitários, integração em pontos críticos, E2E nos fluxos de negócio mais importantes."
+  },
+  {
+    "id": "j06",
+    "tech": "java",
+    "question": "Como tratar concorrência em uma API que processa pagamentos simultâneos?",
+    "tags": [
+      "concorrência",
+      "@Version",
+      "bloqueio otimista",
+      "pessimista",
+      "idempotência",
+      "Saga",
+      "Redis",
+      "Kafka"
+    ],
+    "answer": "1. Bloqueio Otimista (@Version JPA): verifica versão do registro; conflito lança OptimisticLockException.\n2. Bloqueio Pessimista (SELECT FOR UPDATE): trava o registro durante o processamento.\n3. Idempotência: idempotency-key garante que a mesma requisição não seja processada duas vezes.\n4. Fila/Queue: RabbitMQ ou Kafka para serializar processamento de pagamentos da mesma conta.\n5. Operação atômica: UPDATE conta SET saldo = saldo - ? WHERE id = ? AND saldo >= ?\n6. Distributed Lock: Redis RedLock ou database advisory locks para coordenar entre instâncias.\n7. Saga Pattern: em microsserviços, para consistência eventual em transações distribuídas."
+  },
+  {
+    "id": "sp01",
+    "tech": "spring",
+    "question": "Explique o ciclo completo de uma requisição REST em uma aplicação Spring.",
+    "tags": [
+      "REST",
+      "DispatcherServlet",
+      "@Controller",
+      "@Service",
+      "@Repository",
+      "@Transactional",
+      "filtro",
+      "JWT"
+    ],
+    "answer": "1. Cliente envia requisição HTTP para uma URL.\n2. Servidor Web (Nginx/Apache) encaminha ao container.\n3. DispatcherServlet do Spring intercepta.\n4. Filtros/Interceptors: autenticação JWT/OAuth, CORS, logging, rate limiting.\n5. Controller: mapeia via @GetMapping/@PostMapping, extrai @PathVariable / @RequestBody.\n6. DTO/Validação: JSON convertido para objeto Java, validado com @Valid / Bean Validation.\n7. Service: executa lógica de negócio e regras.\n8. Repository: acessa banco via JPA/Hibernate ou JDBC.\n9. @Transactional gerencia commit/rollback.\n10. Resposta serializada para JSON com status HTTP adequado (200/201/404/etc.).\n11. @ControllerAdvice intercepta exceções e retorna erros padronizados."
+  },
+  {
+    "id": "sp02",
+    "tech": "spring",
+    "question": "Como funciona o ciclo de vida de um Bean no Spring?",
+    "tags": [
+      "Bean",
+      "IoC",
+      "@PostConstruct",
+      "@PreDestroy",
+      "singleton",
+      "prototype",
+      "ApplicationContext",
+      "lifecycle"
+    ],
+    "answer": "Ciclo:\n1. Instanciação pelo container.\n2. Injeção de dependências.\n3. @PostConstruct (ou InitializingBean.afterPropertiesSet()).\n4. Uso normal pela aplicação.\n5. @PreDestroy (ou DisposableBean.destroy()).\n6. Destruição.\n\nEscopos:\n• Singleton (padrão): uma instância por ApplicationContext.\n• Prototype: nova instância a cada injeção.\n• Request/Session: por requisição/sessão HTTP.\n\n@PostConstruct → inicialização (conexões, caches).\n@PreDestroy → limpeza de recursos."
+  },
+  {
+    "id": "sp03",
+    "tech": "spring",
+    "question": "Quais boas práticas são importantes em APIs REST?",
+    "tags": [
+      "REST",
+      "HTTP",
+      "status code",
+      "versionamento",
+      "paginação",
+      "OpenAPI",
+      "Swagger",
+      "segurança",
+      "HATEOAS"
+    ],
+    "answer": "1. Recursos como substantivos no plural: /clientes, /pedidos.\n2. Métodos HTTP corretos: GET (leitura), POST (criação), PUT (total), PATCH (parcial), DELETE.\n3. Status HTTP semânticos: 200, 201, 204, 400, 401, 403, 404, 409, 500.\n4. Versionamento: /v1/clientes ou via header Accept.\n5. Paginação em listagens: ?page=0&size=20&sort=nome,asc.\n6. Idempotência: GET/PUT/DELETE idempotentes; POST via idempotency-key.\n7. Segurança: HTTPS, OAuth2/JWT, rate limiting, validação de entrada.\n8. Documentação: OpenAPI/Swagger com exemplos.\n9. Erros padronizados: { \"codigo\":\"ERR001\", \"mensagem\":\"...\", \"detalhes\":[...] }.\n10. Cache: headers Cache-Control, ETag para recursos pouco alterados."
+  },
+  {
+    "id": "sp04",
+    "tech": "spring",
+    "question": "Qual a diferença entre PUT e PATCH?",
+    "tags": [
+      "PUT",
+      "PATCH",
+      "HTTP",
+      "REST",
+      "idempotente",
+      "atualização parcial",
+      "atualização completa"
+    ],
+    "answer": "PUT: atualização completa do recurso. Envia todos os campos; omitidos podem ser zerados. Idempotente.\n\nPATCH: atualização parcial. Envia apenas os campos a alterar; demais mantêm seus valores. Idempotente (RFC 5789).\n\nExemplo:\n  PUT /clientes/123  → { nome, email, telefone } (todos os campos)\n  PATCH /clientes/123 → { email: \"novo@email.com\" } (só o que mudou)\n\nNo backend, PATCH exige tratamento para aplicar apenas os campos recebidos (Map ou MapStruct com null-check).\n\nRegra: PUT para substituir o recurso inteiro; PATCH para correções pontuais."
+  },
+  {
+    "id": "sp05",
+    "tech": "spring",
+    "question": "Como versionar APIs em produção?",
+    "tags": [
+      "versionamento",
+      "API",
+      "URL path",
+      "header",
+      "breaking change",
+      "deprecation",
+      "Sunset",
+      "compatibilidade"
+    ],
+    "answer": "Estratégias:\n1. URL Path (mais comum): /api/v1/clientes — simples, explícito, cacheável.\n2. Query Parameter: /api/clientes?version=1 — útil para testes.\n3. Header custom: Accept-Version: v1 — URL limpa.\n4. Content Negotiation: Accept: application/vnd.banco.v1+json — mais RESTful.\n\nEvolução:\n• Breaking changes (contrato alterado, campo removido) → nova versão.\n• Non-breaking (campo opcional adicionado) → mesma versão.\n• Deprecação: header Sunset com prazo de desativação.\n• Manter v1 em paralelo enquanto clientes migram para v2."
+  },
+  {
+    "id": "sq01",
+    "tech": "sql",
+    "question": "Qual a diferença entre INNER JOIN, LEFT JOIN, RIGHT JOIN e FULL JOIN?",
+    "tags": [
+      "INNER JOIN",
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "FULL JOIN",
+      "NULL",
+      "SQL",
+      "Oracle",
+      "relacionamento"
+    ],
+    "answer": "INNER JOIN: retorna apenas registros com correspondência em ambas as tabelas.\n\nLEFT JOIN: todos da tabela esquerda + correspondentes da direita (NULL onde não há match).\n\nRIGHT JOIN: todos da tabela direita + correspondentes da esquerda.\n\nFULL JOIN (FULL OUTER JOIN): todos de ambas as tabelas; NULL onde não há correspondência.\n\nExemplos:\n  -- Clientes com pedidos\n  SELECT c.nome, p.valor FROM clientes c INNER JOIN pedidos p ON c.id = p.cliente_id;\n\n  -- Todos os clientes, mesmo sem pedidos\n  SELECT c.nome, p.valor FROM clientes c LEFT JOIN pedidos p ON c.id = p.cliente_id;\n\n  -- Todos de ambas as tabelas\n  SELECT c.nome, p.valor FROM clientes c FULL JOIN pedidos p ON c.id = p.cliente_id;"
+  },
+  {
+    "id": "sq02",
+    "tech": "sql",
+    "question": "O que é índice no Oracle e quando pode prejudicar a performance?",
+    "tags": [
+      "índice",
+      "B-Tree",
+      "Bitmap",
+      "Oracle",
+      "DML",
+      "cardinalidade",
+      "over-indexing",
+      "EXPLAIN PLAN",
+      "fragmentação"
+    ],
+    "answer": "Índice é uma estrutura (geralmente B-Tree) que acelera buscas — funciona como o índice de um livro. Oracle cria automaticamente para PK e UNIQUE.\n\nTipos: B-Tree (padrão), Bitmap (data warehouse), Function-Based, Composite.\n\nQuando prejudica:\n• DML excessivo: INSERT/UPDATE/DELETE mais lentos pois o índice é atualizado junto.\n• Baixa cardinalidade: colunas M/F — full table scan pode ser mais rápido.\n• Over-indexing: muitos índices aumentam overhead de manutenção.\n• Fragmentação: após muitas operações DML o índice desbalancea — precisa de REBUILD.\n• Tabelas pequenas: Oracle pode ignorar o índice e preferir full table scan.\n\nBoas práticas: indexar colunas de WHERE, JOIN, ORDER BY com alta cardinalidade. Monitorar via V$OBJECT_USAGE."
+  },
+  {
+    "id": "sq03",
+    "tech": "sql",
+    "question": "Como investigar e resolver lentidão em queries Oracle?",
+    "tags": [
+      "EXPLAIN PLAN",
+      "AWR",
+      "ASH",
+      "Oracle",
+      "N+1",
+      "estatísticas",
+      "SQL tuning",
+      "índice",
+      "otimização"
+    ],
+    "answer": "1. EXPLAIN PLAN / AUTOTRACE: identificar full table scans, nested loops ineficientes, sorts em disco.\n2. Executar query direto no SQL Developer vs via aplicação — isolar se o problema é no ORM ou no banco.\n3. Verificar índices nas colunas de JOIN e WHERE; confirmar se o otimizador os usa.\n4. Atualizar estatísticas: EXEC DBMS_STATS.GATHER_TABLE_STATS('schema','tabela');\n5. AWR/ASH Reports: identificar queries TOP, wait events, gargalos de I/O.\n6. Verificar N+1 queries, loops aninhados, carregamento excessivo de dados.\n7. Avaliar particionamento para tabelas grandes (range, hash).\n8. Hints como último recurso para forçar plano de execução."
+  },
+  {
+    "id": "sq04",
+    "tech": "sql",
+    "question": "Explique FetchType.LAZY e EAGER e os problemas que podem ocorrer.",
+    "tags": [
+      "LAZY",
+      "EAGER",
+      "JPA",
+      "Hibernate",
+      "N+1",
+      "LazyInitializationException",
+      "JOIN FETCH",
+      "EntityGraph"
+    ],
+    "answer": "LAZY (Preguiçoso): relacionados carregados somente quando acessados. Padrão para @OneToMany e @ManyToMany. Economiza memória.\n\nEAGER (Ansioso): relacionados carregados junto com a entidade principal. Padrão para @OneToOne e @ManyToOne.\n\nProblemas LAZY:\n• LazyInitializationException: acessar coleção lazy fora de sessão aberta.\n• N+1 Queries: iterar sobre N entidades e acessar relacionamentos lazy = N+1 queries.\n\nProblemas EAGER:\n• Carrega dados desnecessários com JOINs complexos.\n• Cascata EAGER em múltiplos relacionamentos pode trazer quase todo o banco.\n\nRecomendação: LAZY por padrão; usar JOIN FETCH ou Entity Graph quando precisar dos relacionados."
+  },
+  {
+    "id": "sq05",
+    "tech": "sql",
+    "question": "O que é o problema de N+1 queries e como resolvê-lo?",
+    "tags": [
+      "N+1",
+      "JPA",
+      "Hibernate",
+      "JOIN FETCH",
+      "@BatchSize",
+      "Entity Graph",
+      "performance",
+      "ORM"
+    ],
+    "answer": "N+1 ocorre quando 1 query retorna N entidades e, para cada uma, 1 query adicional carrega um relacionamento lazy — total: N+1 queries.\n\nExemplo:\n  List<Cliente> clientes = repo.findAll();       // 1 query\n  for (Cliente c : clientes) {\n    c.getPedidos().size();  // 1 query por cliente\n  }\n\nSoluções:\n1. JOIN FETCH: SELECT c FROM Cliente c JOIN FETCH c.pedidos\n2. Entity Graph: @NamedEntityGraph especificando atributos a carregar.\n3. @BatchSize(size=20): carrega relacionamentos em lotes.\n4. Projeções DTO ou queries nativas quando não precisar das entidades completas."
+  },
+  {
+    "id": "sq06",
+    "tech": "sql",
+    "question": "Qual a diferença entre persist, merge e save no JPA/Spring Data?",
+    "tags": [
+      "persist",
+      "merge",
+      "save",
+      "JPA",
+      "Hibernate",
+      "Spring Data",
+      "EntityManager",
+      "upsert",
+      "detached"
+    ],
+    "answer": "persist (JPA): insere nova entidade. Se já tiver ID lança exceção. Executa no flush/commit.\n\nmerge (JPA): copia estado de entidade detached para o contexto. Se não existe → insere; se existe → atualiza. Retorna entidade gerenciada.\n\nsave (Spring Data): se ID null → chama persist(); se tem ID → chama merge(). Equivale a upsert.\n\nQuando usar:\n• persist → certeza de entidade nova, controle explícito.\n• merge → entidade vinda de API externa, sincronizar com contexto.\n• save → CRUD simples no Spring Data JPA."
+  },
+  {
+    "id": "dv01",
+    "tech": "devops",
+    "question": "Qual a diferença entre container Docker e máquina virtual (VM)?",
+    "tags": [
+      "Docker",
+      "VM",
+      "container",
+      "kernel",
+      "namespace",
+      "cgroup",
+      "imagem",
+      "isolamento",
+      "hypervisor"
+    ],
+    "answer": "VM: virtualiza hardware completo via hipervisor. Cada VM tem SO e kernel próprios. Isolamento forte, mas pesado (GBs, boot em minutos).\n\nContainer Docker: compartilha o kernel do host via namespaces e cgroups, isolando apenas o processo e suas dependências. Leve (MBs), inicia em segundos.\n\nDiferenças práticas:\n• Tamanho: containers MBs vs GBs de VMs.\n• Startup: containers em segundos, VMs em minutos.\n• Isolamento: VMs mais forte (kernel separado).\n• Portabilidade: Docker empacota app + dependências — roda em qualquer lugar.\n• Imagens em layers: eficiência de armazenamento e build incremental.\n\nDocker: ideal para microsserviços e cloud-native. VMs: quando isolamento total ou SOs diferentes são necessários."
+  },
+  {
+    "id": "dv02",
+    "tech": "devops",
+    "question": "O que é CI/CD e quais benefícios ele traz?",
+    "tags": [
+      "CI",
+      "CD",
+      "pipeline",
+      "Jenkins",
+      "GitHub Actions",
+      "Azure DevOps",
+      "deploy",
+      "automação",
+      "qualidade"
+    ],
+    "answer": "CI (Continuous Integration): integrar código várias vezes ao dia. Cada push dispara build + testes automáticos para detectar erros rapidamente.\n\nCD (Continuous Delivery/Deployment):\n• Delivery: código sempre pronto para deploy (aprovação manual antes de produção).\n• Deployment: deploy em produção também automático.\n\nBenefícios:\n• Feedback rápido: erros detectados minutos após o commit.\n• Menor risco: deploys pequenos e frequentes são mais previsíveis.\n• Automação: elimina tarefas manuais e propensas a erro.\n• Qualidade: testes garantem critérios antes de ir para produção.\n• Rastreabilidade: cada deploy vinculado a um commit.\n\nFerramentas: Jenkins, GitHub Actions, GitLab CI, Azure DevOps, CircleCI."
+  },
+  {
+    "id": "dv03",
+    "tech": "devops",
+    "question": "Como você reagiria a um deploy em produção que começa a falhar?",
+    "tags": [
+      "incidente",
+      "rollback",
+      "feature flag",
+      "circuit breaker",
+      "post-mortem",
+      "observabilidade",
+      "logs",
+      "on-call"
+    ],
+    "answer": "1. Avaliar gravidade: logs, métricas (CPU, memória, error rate), impacto nos usuários.\n2. Comunicação imediata: alertar time, PO e stakeholders. Abrir canal de incidente.\n3. Rollback rápido: reverter para versão estável — restaurar o serviço tem prioridade.\n4. Se não puder fazer rollback: isolar via feature flag ou circuit breaker.\n5. Investigar em paralelo: logs, stack traces, mudanças recentes, configurações.\n6. Confirmar estabilização e monitorar por período após a correção.\n7. Post-mortem blameless: identificar o que falhou no processo.\n8. Ações corretivas: mais testes, canary deployment, monitoramento aprimorado."
+  },
+  {
+    "id": "dv04",
+    "tech": "devops",
+    "question": "O que você conhece sobre AWS (EC2, S3, Lambda, RDS)?",
+    "tags": [
+      "AWS",
+      "EC2",
+      "S3",
+      "Lambda",
+      "RDS",
+      "serverless",
+      "cloud",
+      "Multi-AZ",
+      "Read Replica",
+      "Azure"
+    ],
+    "answer": "EC2: servidor virtual na nuvem. Controle total (SO, tamanho, security groups). Escala por demanda.\n\nS3: armazenamento de objetos altamente durável (11 noves). Backups, static hosting, data lake. Classes de armazenamento (Standard, Glacier) otimizam custo.\n\nLambda: serverless. Executa código por evento (API Gateway, S3, DynamoDB Streams) sem gerenciar servidor. Cobrado pelo tempo de execução.\n\nRDS: banco gerenciado (MySQL, PostgreSQL, Oracle, SQL Server). AWS cuida de backups, patching, failover. Suporta Multi-AZ (alta disponibilidade) e Read Replicas (performance de leitura).\n\nNota: meu dia a dia atual é Azure DevOps, mas tenho conhecimento teórico e experiência prática com AWS em projetos anteriores."
+  },
+  {
+    "id": "ar01",
+    "tech": "arch",
+    "question": "O que é microsserviço? Quais as vantagens e os desafios?",
+    "tags": [
+      "microsserviço",
+      "monólito",
+      "DDD",
+      "Saga",
+      "Kubernetes",
+      "escalabilidade",
+      "autonomia",
+      "event sourcing"
+    ],
+    "answer": "Microsserviço: aplicação dividida em serviços pequenos, independentes e autônomos, cada um responsável por uma capacidade de negócio, com banco próprio e ciclo de deploy independente.\n\nVantagens:\n• Escalabilidade independente por serviço.\n• Tecnologia heterogênea por domínio.\n• Resiliência: falha isolada não derruba tudo (com circuit breakers).\n• Times autônomos — desenvolvem e deployam independentemente.\n\nDesafios:\n• Complexidade distribuída: logging, tracing, debugging mais difíceis.\n• Consistência de dados: exige Saga ou consistência eventual.\n• DevOps maduro: CI/CD, Kubernetes, service mesh.\n• Overhead operacional: múltiplos bancos e deploys, maior custo de infra.\n• Segurança entre serviços: mTLS, JWT."
+  },
+  {
+    "id": "ar02",
+    "tech": "arch",
+    "question": "O que é CQRS e quando utilizá-lo?",
+    "tags": [
+      "CQRS",
+      "Command",
+      "Query",
+      "DDD",
+      "event sourcing",
+      "leitura",
+      "escrita",
+      "escalabilidade"
+    ],
+    "answer": "CQRS (Command Query Responsibility Segregation): separa modelos de escrita (Command) e leitura (Query).\n\n• Commands: alteram estado (criar, atualizar, deletar).\n• Queries: apenas leem, sem efeitos colaterais.\n\nBenefícios:\n• Escalar leitura e escrita independentemente.\n• Modelo de leitura desnormalizado para performance.\n• Facilita event sourcing e auditoria.\n• Código mais alinhado com linguagem de negócio (DDD).\n\nQuando usar:\n• Carga de leitura muito maior que escrita.\n• Domínios complexos.\n• Necessidade de auditoria completa ou event sourcing.\n\nQuando evitar: CRUDs simples — CQRS adiciona complexidade desnecessária."
+  },
+  {
+    "id": "ar03",
+    "tech": "arch",
+    "question": "Quando usar cache (Redis ou Red Hat Data Grid)?",
+    "tags": [
+      "Redis",
+      "cache",
+      "Infinispan",
+      "Data Grid",
+      "sessão",
+      "rate limiting",
+      "latência",
+      "invalidação",
+      "pub/sub"
+    ],
+    "answer": "Quando usar:\n• Dados de leitura frequente com pouca alteração: listas de domínio, taxas de câmbio.\n• Alta latência de banco: queries complexas que demoram segundos.\n• Alta concorrência de leitura simultânea.\n• Sessões de usuário em ambientes stateless.\n• Rate limiting: controlar requisições por cliente.\n• Resultados de cálculos pesados: relatórios, cálculos financeiros.\n\nRedis vs Red Hat Data Grid:\n• Redis: simples, rápido, estruturas diversas (hashes, listas, sorted sets). Ótimo para sessões, caching, filas pub/sub, rate limiting.\n• Data Grid (Infinispan): cache distribuído enterprise. Replicação síncrona/assíncrona, transações XA, queries. Ideal para clusters Java EE complexos.\n\nCenário bancário: taxas de juros do dia, limites de crédito, configurações de produtos."
+  },
+  {
+    "id": "ar04",
+    "tech": "arch",
+    "question": "Como lidar com indisponibilidade de um serviço externo em produção?",
+    "tags": [
+      "Circuit Breaker",
+      "Resilience4j",
+      "fallback",
+      "retry",
+      "bulkhead",
+      "timeout",
+      "observabilidade",
+      "SLA",
+      "fail-fast"
+    ],
+    "answer": "1. Circuit Breaker (Resilience4j): circuito abre após falhas repetidas — chamadas subsequentes falham imediatamente (fail-fast), evitando timeout em cascata.\n2. Fallback: retornar cache, valor padrão ou mensagem amigável ao usuário.\n3. Retry com exponential backoff e jitter: tentar novamente sem sobrecarregar o serviço.\n4. Timeout agressivo: não bloquear threads indefinidamente.\n5. Bulkhead: thread pools isolados para que falha de um serviço não esgote os recursos da aplicação.\n6. Monitoramento: alertar quando thresholds de erro/latência são ultrapassados.\n7. Degradação graceful: operar com funcionalidades reduzidas em vez de parar completamente.\n8. Health Checks: endpoint que verifica dependências críticas.\n9. Post-mortem: analisar violação de SLA e negociar melhorias."
+  },
+  {
+    "id": "qu01",
+    "tech": "quarkus",
+    "question": "Qual a diferença entre Spring Boot e Quarkus? Quando escolher cada um?",
+    "tags": [
+      "Quarkus",
+      "Spring Boot",
+      "GraalVM",
+      "native image",
+      "cloud-native",
+      "startup",
+      "memória",
+      "microsserviço"
+    ],
+    "answer": "Spring Boot: ecossistema maduro e abrangente (Security, Data, Cloud, Batch). Vasta documentação, comunidade ativa. Ideal para sistemas complexos, legados e forte integração com módulos Spring.\n\nQuarkus: otimizado para cloud-native e Kubernetes. Startup em milissegundos, memória drasticamente menor — graças à compilação nativa (GraalVM) e carregamento sob demanda de extensões.\n\nQuando escolher:\n• Spring Boot → legado, equipe com forte background Spring, ecossistema amplo necessário.\n• Quarkus → microsserviços, containers, serverless — startup rápido e footprint de memória críticos.\n\nAmbos suportam JPA, REST, mensageria e segurança. A escolha depende do contexto: cloud-first → Quarkus; legado/Spring ecosystem → Spring Boot."
+  },
+  {
+    "id": "qu02",
+    "tech": "quarkus",
+    "question": "O que é compilação nativa com GraalVM e quais as implicações?",
+    "tags": [
+      "GraalVM",
+      "native image",
+      "AOT",
+      "startup",
+      "reflexão",
+      "Quarkus",
+      "build time",
+      "binário"
+    ],
+    "answer": "GraalVM Native Image compila a aplicação Java para binário nativo executável (AOT), eliminando a JVM em runtime.\n\nVantagens:\n• Startup em milissegundos (vs segundos com JVM).\n• Consumo de memória muito menor — essencial em Kubernetes/serverless.\n• Binário autossuficiente, sem JRE instalado.\n\nImplicações no desenvolvimento:\n• Reflexão deve ser declarada explicitamente — o compilador AOT não infere reflexão dinâmica.\n• Bibliotecas com reflexão pesada precisam de adaptadores.\n• Build mais lento (minutos) que build JVM.\n• Quarkus abstrai a maioria das limitações via extensões e processamento em build time.\n• Debugging do binário nativo é mais complexo.\n\nPara REST, JPA, CDI e JSON, o Quarkus funciona nativamente sem configuração adicional."
+  },
+  {
+    "id": "an01",
+    "tech": "angular",
+    "question": "Qual a diferença entre Component, Service e Module no Angular?",
+    "tags": [
+      "Component",
+      "Service",
+      "Module",
+      "NgModule",
+      "@Injectable",
+      "standalone",
+      "lifecycle",
+      "DI"
+    ],
+    "answer": "Component: responsável pela view — template HTML, CSS e lógica de apresentação. Menor unidade de UI reutilizável.\n\nService: contém lógica de negócio, comunicação com API, manipulação de dados. Anotado com @Injectable, compartilhado entre componentes via DI.\n\nModule (NgModule): agrupa componentes, services, pipes e directives. Controla importações e exportações.\n\nFluxo: Component → chama Service → Service faz HTTP → Component atualiza a view.\n\nAngular 14+ (Standalone): módulos opcionais. Componentes standalone importam diretamente o que precisam — menos boilerplate, melhor tree-shaking."
+  },
+  {
+    "id": "an02",
+    "tech": "angular",
+    "question": "O que é RxJS e Observable? Como são usados no Angular?",
+    "tags": [
+      "RxJS",
+      "Observable",
+      "Subject",
+      "BehaviorSubject",
+      "pipe",
+      "operators",
+      "subscription",
+      "async pipe",
+      "memory leak"
+    ],
+    "answer": "RxJS: biblioteca para programação reativa com Observables — fluxos de dados assíncronos de forma declarativa.\n\nObservable: coleção lazy que emite valores ao longo do tempo. Diferente de Promise (resolve uma vez), pode emitir múltiplos valores.\n\nConceitos:\n• Observer: consome valores (next, error, complete).\n• Operators: map, filter, switchMap, mergeMap, debounceTime, catchError.\n• Subscription: deve ser cancelada (unsubscribe) para evitar memory leaks.\n• Subject/BehaviorSubject: Observable + Observer — comunicação entre componentes.\n\nNo Angular:\n• HttpClient retorna Observables.\n• Eventos de formulário (valueChanges, statusChanges).\n• Gerenciamento de estado (NgRx, Akita).\n• async pipe subscreve e cancela automaticamente no template."
+  },
+  {
+    "id": "an03",
+    "tech": "angular",
+    "question": "Como melhorar a performance em aplicações Angular?",
+    "tags": [
+      "Lazy Loading",
+      "OnPush",
+      "trackBy",
+      "Virtual Scroll",
+      "unsubscribe",
+      "SSR",
+      "Angular Universal",
+      "bundle",
+      "tree shaking"
+    ],
+    "answer": "1. Lazy Loading: carregar módulos/features sob demanda (loadChildren).\n2. ChangeDetectionStrategy.OnPush: verifica apenas quando @Inputs mudam ou eventos são disparados.\n3. trackBy em *ngFor: evitar re-renderização completa de listas.\n4. Unsubscribe: takeUntil, async pipe ou take(1) em ngOnDestroy — evitar memory leaks.\n5. Virtual Scrolling: cdk-virtual-scroll-viewport para listas grandes.\n6. Otimização de bundles: code splitting, tree shaking, webpack-bundle-analyzer.\n7. Web Workers: mover processamento pesado para não bloquear a UI.\n8. Preloading: PreloadAllModules ou estratégia customizada.\n9. SSR: Angular Universal para melhorar SEO e tempo de primeira renderização.\n10. Pipes puros: Angular cacheia o resultado se inputs não mudarem."
+  },
+  {
+    "id": "an04",
+    "tech": "angular",
+    "question": "Qual a diferença entre Observable e Promise no Angular?",
+    "tags": [
+      "Observable",
+      "Promise",
+      "RxJS",
+      "async",
+      "cancelável",
+      "HttpClient",
+      "async pipe",
+      "fluxo",
+      "toPromise"
+    ],
+    "answer": "Promise: valor futuro único. Não cancelável. Executa imediatamente. Resolve uma vez.\n\nObservable (RxJS): fluxo de valores ao longo do tempo. Lazy — executa só com subscriber. Cancelável (unsubscribe). Emite múltiplos valores. Suporta operadores poderosos.\n\nNa prática:\n• HttpClient retorna Observable — não Promise.\n• Para WebSocket, polling, eventos de formulário: Observable é muito superior.\n• async pipe no template gerencia subscribe/unsubscribe automaticamente.\n• Converter para Promise: firstValueFrom(obs$) ou lastValueFrom(obs$).\n\nUse Observable sempre que possível no Angular para aproveitar os operadores RxJS."
+  },
+  {
+    "id": "ss01",
+    "tech": "soft",
+    "question": "Como você lida com discordâncias técnicas dentro do time?",
+    "tags": [
+      "comunicação",
+      "conflito",
+      "colaboração",
+      "ADR",
+      "decisão técnica",
+      "feedback",
+      "pair programming"
+    ],
+    "answer": "Escuto ativamente antes de defender minha posição. Separo a discussão técnica da questão pessoal.\n\nBusco dados e evidências: benchmarks, documentação, experiências documentadas. Evito argumentos de autoridade.\n\nSe não há consenso, proponho uma prova de conceito ou teste A/B com critérios claros.\n\nRespeito a decisão do tech lead/arquiteto, mas registro minha visão por escrito (ticket, ADR) — cria histórico revisável no futuro.\n\nAcredito que divergências técnicas saudáveis, bem conduzidas, elevam a qualidade das soluções."
+  },
+  {
+    "id": "ss02",
+    "tech": "soft",
+    "question": "Como você lida com pressão e prazos curtos?",
+    "tags": [
+      "pressão",
+      "prazo",
+      "MVP",
+      "Eisenhower",
+      "priorização",
+      "comunicação",
+      "scrum",
+      "transparência"
+    ],
+    "answer": "Mantenho a calma e priorizo com a matriz de Eisenhower (urgente/importante).\n\nComunico transparentemente com o time e PO sobre o que é viável no prazo versus o que precisa ser negociado.\n\nFoco no MVP: entregar o que gera valor com qualidade mínima aceitável e iterar. Não sacrifico testes críticos nem segurança, mas posso adiar refatorações cosméticas.\n\nQuebro grandes entregas em tarefas menores — dá visibilidade de progresso e mantém o time motivado.\n\nPeço ajuda quando necessário: distribuir carga e revisar código em paralelo acelera a entrega."
+  },
+  {
+    "id": "ss03",
+    "tech": "soft",
+    "question": "Fale sobre um bug difícil que você resolveu.",
+    "tags": [
+      "debugging",
+      "produção",
+      "idempotência",
+      "Redis",
+      "UNIQUE CONSTRAINT",
+      "concorrência",
+      "logs",
+      "análise"
+    ],
+    "answer": "Contexto: na Caixa Econômica Federal, transações financeiras duplicavam registros em produção, apenas em carga alta, impossível reproduzir em desenvolvimento.\n\nInvestigação: analisei logs de auditoria e percebi que o problema ocorria quando duas requisições idênticas chegavam com intervalo de milissegundos — o sistema não tinha controle de idempotência.\n\nSolução:\n1. Idempotency-key com Redis: cada requisição recebe chave única do cliente; antes de processar, verificamos se já foi processada.\n2. UNIQUE CONSTRAINT no banco como barreira final de segurança.\n3. Logs de auditoria detalhados em todas as operações financeiras.\n\nAprendizado: pensar em concorrência desde o design e manter logs detalhados em sistemas financeiros é essencial."
+  },
+  {
+    "id": "ss04",
+    "tech": "soft",
+    "question": "Prefere trabalhar sozinho ou em equipe? Por quê?",
+    "tags": [
+      "equipe",
+      "colaboração",
+      "pair programming",
+      "autonomia",
+      "code review",
+      "brainstorm",
+      "senioridade"
+    ],
+    "answer": "Prefiro equipe. Revisão de código, pair programming e brainstorms sempre elevam a qualidade além do que eu faria sozinho. Perspectivas diferentes identificam riscos e oportunidades que eu poderia não enxergar.\n\nValorizo foco individual para tarefas que exigem concentração profunda: bugs complexos, refatoração crítica, estudo.\n\nO ideal: trabalhar com o time para alinhamento e decisões arquiteturais, com autonomia para executar tarefas técnicas com responsabilidade.\n\nCom 14 anos em equipes de grande porte (Sebrae, Fiocruz, INEP, Caixa), aprendi que o resultado coletivo supera a soma das contribuições individuais quando há comunicação e confiança."
+  },
+  {
+    "id": "an05",
+    "tech": "angular",
+    "question": "O que são Signals no Angular e como diferem do RxJS?",
+    "tags": [
+      "Signals",
+      "Angular 17",
+      "reatividade",
+      "computed",
+      "effect",
+      "RxJS",
+      "zone.js",
+      "performance"
+    ],
+    "answer": "Signals (Angular 16+): primitiva reativa síncrona que representa um valor que pode mudar ao longo do tempo. O Angular rastreia dependências automaticamente e atualiza apenas o que mudou — sem Zone.js.\n\nConceitos:\n• signal(value): cria um signal gravável.\n• computed(() => ...): valor derivado de outros signals — atualiza automaticamente.\n• effect(() => ...): efeito colateral que roda quando signals mudam.\n\nDiferenças do RxJS:\n• Signals são síncronos e sempre têm um valor atual. Observables são assíncronos e lazy.\n• Signals: sintaxe simples, sem subscribe/unsubscribe. RxJS: poderoso para fluxos complexos, eventos, HTTP.\n• Signals eliminam a necessidade de Zone.js e reduzem change detection desnecessário.\n\nQuando usar:\n• Signals → estado local do componente, valores derivados, UI reativa simples.\n• RxJS → HTTP, WebSocket, eventos complexos com operadores (debounce, switchMap).\n\nAngular 17+ recomenda Signals para estado local e RxJS para fluxos assíncronos."
+  },
+  {
+    "id": "an06",
+    "tech": "angular",
+    "question": "O que é injeção de dependência hierárquica no Angular e como o escopo de providers funciona?",
+    "tags": [
+      "DI",
+      "providers",
+      "ElementInjector",
+      "ModuleInjector",
+      "providedIn",
+      "singleton",
+      "escopo",
+      "Angular"
+    ],
+    "answer": "Angular possui uma árvore de injetores hierárquicos. Cada nível pode ter seus próprios providers, criando instâncias com escopos distintos.\n\nHierarquia:\n• Root Injector: @Injectable({ providedIn: 'root' }) — singleton na aplicação inteira.\n• Module Injector: declarado em providers do NgModule — compartilhado pelo módulo.\n• Component Injector: declarado em providers do @Component — instância nova por componente e seus filhos.\n• Element Injector: por diretiva ou componente individual.\n\nImpacto prático:\n• providedIn: 'root' → uma instância para todo o app (padrão recomendado).\n• providers no componente → cada instância do componente tem seu próprio service — útil para state local isolado.\n• Lazy modules criam injector filho — services declarados neles não são singleton globais.\n\nBoa prática: usar providedIn: 'root' por padrão. Declarar no componente apenas quando o estado deve ser isolado por instância."
+  },
+  {
+    "id": "mg01",
+    "tech": "mongodb",
+    "question": "Quando usar MongoDB em vez de um banco relacional?",
+    "tags": [
+      "MongoDB",
+      "NoSQL",
+      "documento",
+      "schema",
+      "flexibilidade",
+      "escalabilidade",
+      "relacional",
+      "trade-off"
+    ],
+    "answer": "MongoDB armazena dados como documentos JSON (BSON), sem schema fixo, com escalabilidade horizontal nativa.\n\nUse MongoDB quando:\n• Esquema de dados variável ou evolutivo — campos diferentes por registro.\n• Dados naturalmente hierárquicos ou aninhados (documentos dentro de documentos).\n• Leitura e escrita de documentos completos — sem JOINs complexos.\n• Alta escalabilidade horizontal: sharding distribuído nativamente.\n• Event logs, catálogos de produtos, dados de IoT, sessões de usuário.\n\nPrefira banco relacional quando:\n• Dados fortemente relacionados exigem JOINs e integridade referencial.\n• Transações ACID complexas entre múltiplas entidades.\n• Relatórios e queries analíticas complexas (SQL é mais expressivo).\n• Esquema estável e bem definido.\n\nArmadilha: MongoDB não substitui relacional em sistemas financeiros com transações distribuídas — use com consciência das limitações de consistência."
+  },
+  {
+    "id": "mg02",
+    "tech": "mongodb",
+    "question": "Como funciona a aggregation pipeline no MongoDB?",
+    "tags": [
+      "aggregation",
+      "pipeline",
+      "match",
+      "group",
+      "lookup",
+      "project",
+      "unwind",
+      "MongoDB",
+      "performance"
+    ],
+    "answer": "Aggregation Pipeline: sequência de estágios que transformam documentos progressivamente — equivalente ao SELECT + GROUP BY + JOIN do SQL.\n\nEstágios principais:\n• $match: filtra documentos (equivalente ao WHERE). Coloque o mais cedo possível para reduzir volume.\n• $group: agrupa e calcula ($sum, $avg, $max, $min, $count).\n• $project: seleciona/renomeia campos (equivalente ao SELECT).\n• $sort: ordena resultados.\n• $lookup: JOIN com outra coleção.\n• $unwind: desdobra arrays em documentos individuais.\n• $limit / $skip: paginação.\n\nExemplo — total de pedidos por cliente:\n  db.pedidos.aggregate([\n    { $match: { status: 'pago' } },\n    { $group: { _id: '$clienteId', total: { $sum: '$valor' } } },\n    { $sort: { total: -1 } }\n  ])\n\nPerformance: $match e $sort no início aproveitam índices. Evite $lookup excessivo — indica modelagem inadequada."
+  },
+  {
+    "id": "mg03",
+    "tech": "mongodb",
+    "question": "Como modelar relacionamentos no MongoDB: embedding vs referencing?",
+    "tags": [
+      "embedding",
+      "referencing",
+      "modelagem",
+      "MongoDB",
+      "documento",
+      "lookup",
+      "denormalização",
+      "performance"
+    ],
+    "answer": "MongoDB oferece duas estratégias para relacionamentos:\n\nEmbedding (documento aninhado):\n• Dados relacionados dentro do mesmo documento.\n• Vantagem: leitura em uma única operação, sem JOIN.\n• Use quando: dados sempre lidos juntos, relação 1:poucos, filho não existe sem pai.\n• Exemplo: endereços dentro do documento de cliente.\n\nReferencing (referência por ID):\n• Documentos separados com ID de referência.\n• Vantagem: evita duplicação, documentos menores.\n• Use quando: dados lidos separadamente, relação 1:muitos ou muitos:muitos, documento filho cresce ilimitadamente.\n• Exemplo: pedidos referenciando cliente por clienteId.\n\nRegra prática:\n• 'Dados acessados juntos devem ser armazenados juntos' — embedding.\n• 'Dados que crescem ilimitadamente ou são compartilhados' — referencing.\n\nDiferente do relacional: MongoDB favorece denormalização para performance de leitura."
+  },
+  {
+    "id": "sb03",
+    "tech": "spring",
+    "question": "O que é Spring Boot Auto Configuration e como funciona internamente?",
+    "tags": [
+      "Auto Configuration",
+      "Spring Boot",
+      "@Conditional",
+      "@EnableAutoConfiguration",
+      "spring.factories",
+      "starter",
+      "classpath"
+    ],
+    "answer": "Auto Configuration é o mecanismo que configura automaticamente beans com base no classpath, propriedades e beans existentes.\n\nComo funciona:\n1. @SpringBootApplication inclui @EnableAutoConfiguration.\n2. Spring Boot carrega META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports (Boot 3) ou spring.factories (Boot 2).\n3. Cada AutoConfiguration é uma classe @Configuration com condições.\n4. Condições controlam se a configuração é aplicada:\n   • @ConditionalOnClass: aplica se classe existe no classpath.\n   • @ConditionalOnMissingBean: aplica se o bean não foi definido pelo desenvolvedor.\n   • @ConditionalOnProperty: aplica se propriedade está configurada.\n\nExemplo: DataSourceAutoConfiguration verifica se há driver JDBC no classpath e configura DataSource automaticamente — mas não sobrescreve se você definir o seu.\n\nDebug: --debug no startup lista todas as AutoConfigurations aplicadas e rejeitadas (Conditions Report).\n\nPersonalizar: sempre que você define seu próprio bean, o @ConditionalOnMissingBean impede a configuração automática."
+  },
+  {
+    "id": "sb04",
+    "tech": "spring",
+    "question": "Como funciona o Spring Security com JWT em uma API REST?",
+    "tags": [
+      "Spring Security",
+      "JWT",
+      "filtro",
+      "OncePerRequestFilter",
+      "stateless",
+      "Bearer",
+      "SecurityFilterChain",
+      "autenticação"
+    ],
+    "answer": "Fluxo completo de autenticação JWT com Spring Security:\n\n1. Login: cliente envia credenciais → AuthController valida → gera JWT com claims (userId, roles, exp) → retorna token.\n2. Requisições subsequentes: cliente envia header Authorization: Bearer {token}.\n3. Filtro JWT (OncePerRequestFilter): intercepta toda requisição, extrai e valida o token, cria Authentication e injeta no SecurityContextHolder.\n4. Spring Security verifica autorizações (@PreAuthorize, hasRole) com base no contexto.\n\nConfiguração SecurityFilterChain (Spring Boot 3):\n  http\n    .csrf(csrf -> csrf.disable())\n    .sessionManagement(s -> s.sessionCreationPolicy(STATELESS))\n    .authorizeHttpRequests(auth -> auth\n      .requestMatchers('/auth/**').permitAll()\n      .anyRequest().authenticated())\n    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);\n\nBoas práticas:\n• Usar tempo de expiração curto (15-60min) + refresh token.\n• Assinar com chave assimétrica (RS256) em produção.\n• Nunca armazenar dados sensíveis no payload JWT — é apenas Base64, não criptografado."
+  },
+  {
+    "id": "dp01",
+    "tech": "patterns",
+    "question": "Quais padrões de projeto você usa no dia a dia e em que situações?",
+    "tags": [
+      "Strategy",
+      "Factory",
+      "Builder",
+      "Repository",
+      "Observer",
+      "Decorator",
+      "SOLID",
+      "GoF",
+      "design patterns"
+    ],
+    "answer": "Padrões mais utilizados no contexto Java/Spring:\n\nStrategy: encapsula algoritmos intercambiáveis. Uso: diferentes formas de cálculo de taxa, regras de desconto por tipo de cliente. Evita if/else em cascata.\n\nFactory / Factory Method: centraliza criação de objetos complexos. Uso: criar instâncias de processadores de pagamento por tipo (PIX, boleto, cartão).\n\nBuilder: construção passo a passo de objetos complexos. Uso: DTOs com muitos campos opcionais, configurações. Lombok @Builder reduz boilerplate.\n\nRepository: abstrai acesso a dados. Uso: Spring Data JPA — separa lógica de negócio da persistência.\n\nObserver: notifica múltiplos observadores sobre eventos. Uso: Spring Events (@EventListener), Kafka consumers, websockets.\n\nDecorator: adiciona comportamento sem alterar a classe original. Uso: logging, cache, validação em torno de services existentes.\n\nTemplate Method: define esqueleto de algoritmo com passos extensíveis. Uso: pipelines de processamento com etapas fixas e variáveis.\n\nRegra: conhecer o problema antes de aplicar o padrão. Padrão aplicado sem necessidade vira complexidade desnecessária."
+  },
+  {
+    "id": "dp02",
+    "tech": "patterns",
+    "question": "O que é o padrão Repository e como ele se aplica com Spring Data JPA?",
+    "tags": [
+      "Repository",
+      "Spring Data",
+      "JPA",
+      "DDD",
+      "abstração",
+      "interface",
+      "query method",
+      "testabilidade"
+    ],
+    "answer": "Repository é um padrão de DDD que abstrai a coleção de objetos de domínio, isolando a lógica de negócio dos detalhes de persistência.\n\nBenefícios:\n• Desacoplamento: Service não conhece JPA, SQL ou banco.\n• Testabilidade: fácil mockar o Repository com Mockito.\n• Substituição: trocar JPA por MongoDB sem alterar a camada de negócio.\n\nCom Spring Data JPA:\n• Extend JpaRepository<Entidade, ID> → operações CRUD gratuitas.\n• Query Methods: findByNomeAndStatus(String nome, Status status) — Spring gera o SQL.\n• @Query: JPQL ou SQL nativo para queries complexas.\n• Specifications: queries dinâmicas tipadas.\n\nExemplo:\n  public interface ClienteRepository extends JpaRepository<Cliente, Long> {\n    List<Cliente> findByCidadeAndAtivo(String cidade, boolean ativo);\n    @Query(\"SELECT c FROM Cliente c WHERE c.saldo > :minimo\")\n    List<Cliente> findComSaldoAcimaDe(@Param(\"minimo\") BigDecimal minimo);\n  }\n\nEm testes: @DataJpaTest carrega apenas contexto JPA — testes de repository rápidos e isolados."
+  },
+  {
+    "id": "dp03",
+    "tech": "patterns",
+    "question": "O que é o padrão Saga e quando usá-lo em microsserviços?",
+    "tags": [
+      "Saga",
+      "microsserviços",
+      "consistência eventual",
+      "coreografia",
+      "orquestração",
+      "compensação",
+      "Kafka",
+      "transação distribuída"
+    ],
+    "answer": "Saga gerencia transações distribuídas em microsserviços onde não existe transação ACID global. Cada serviço executa sua transação local e publica evento — se algo falha, transações compensatórias desfazem as anteriores.\n\nDois estilos:\n\nCoreografia: serviços reagem a eventos uns dos outros autonomamente. Sem coordenador central. Simples para poucos serviços, difícil de rastrear em fluxos complexos.\n\nOrquestração: um orquestrador (ex: Temporal, Conductor) coordena os serviços explicitamente. Mais fácil de visualizar e debugar. Recomendado para fluxos complexos.\n\nExemplo — pedido de e-commerce:\n1. PedidoService: cria pedido → evento PedidoCriado.\n2. EstoqueService: reserva itens → evento EstoqueReservado.\n3. PagamentoService: processa pagamento → sucesso ou falha.\n4. Falha no pagamento: eventos compensatórios → EstoqueService libera reserva → PedidoService cancela pedido.\n\nQuando usar: transações que envolvem múltiplos microsserviços com bancos independentes.\nQuando evitar: monólitos ou sistemas onde um banco centralizado resolve com transação ACID.\n\nFerramentas: Kafka (eventos), Axon Framework, Temporal.io."
+  }
+]
